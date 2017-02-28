@@ -3,7 +3,7 @@ import java.util.*;
 
 /**
  * 
- * @author Marcus, Oscar, Henrik.
+ * @author Marcus, Oscar, Henrik. hej
  *
  */
 public class FIFO{
