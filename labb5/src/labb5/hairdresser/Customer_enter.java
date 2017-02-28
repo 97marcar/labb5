@@ -1,5 +1,7 @@
 package labb5.hairdresser;
 
-public class Customer_enter {
+import labb5.simulator.Event;
 
+public class Customer_enter implements Event{
+	
 }
