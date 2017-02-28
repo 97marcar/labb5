@@ -1,7 +1,11 @@
 package labb5.hairdresser;
 import java.util.*;
 
-
+/**
+ * 
+ * @author Marcus, Oscar, Henrik.
+ *
+ */
 public class FIFO{
 	
 	//creates a queue
