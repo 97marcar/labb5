@@ -22,18 +22,20 @@ public class Customer_enter implements Event{
 		return false;
 		
 	}
-	public void addToQueue(Object item) {
+	public void addLastLine(Object item) {
 		f.add(item);
 	}
 	public void removeFromQueue() {
 		f.removeFirst();
 		
 	}
-	public void addFrontLine() {
+	public void addFrontLine(Object item) {
+		f.addFirst(item);
 		
 		
 	}
 	public void removeLast() {
+		f.removeBack();
 		
 	}
 }

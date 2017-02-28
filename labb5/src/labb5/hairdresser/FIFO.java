@@ -42,6 +42,9 @@ public class FIFO{
 		}
 		
 	}
+	public void removeBack() {
+		queue.remove(queue.size()-1);
+	}
 	
 	/**
 	 * @return size of queue
@@ -55,6 +58,9 @@ public class FIFO{
 	 */
 	public int maxSize(){
 		return(maxsize);
+	}
+	public void addFirst(Object item) {
+		queue.add(0, item);
 	}
 	
 	/**
