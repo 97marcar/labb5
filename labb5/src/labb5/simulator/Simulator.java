@@ -5,6 +5,16 @@ import java.util.Random;
 import labb5.hairdresser.Customer;
 
 public class Simulator {
+	
+	private EventQueue eventQ = new EventQueue();
+	
+	public void start(){
+
+		while(!eventQ.isEmpty()){
+			eventQ.getFirst().triggerEvent();
+			eventQ.removeFirst();
+		}
+	}
 
 }
 

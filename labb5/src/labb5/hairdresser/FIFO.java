@@ -141,7 +141,9 @@ public class FIFO{
 			
 	}
 	
-	
+	public Object getIndex(int i){
+		return(queue.get(i));
+	}
 	/**
 	 * @return a string with all the objects in the list on a row.
 	 */
