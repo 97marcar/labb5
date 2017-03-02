@@ -6,10 +6,13 @@ public class SaloonState extends State{
 	final int dressers = 5;
 	final int waitchairs = 15;
 	private FIFO f;
+	private int customerCounter = 0;
+	HaircutReady hr;
 	
 	public void addLastLine(Customer c){
 		if(!lineFull()){
 			f.add(c);
+			customerCounter++;
 		}
 		
 	}
@@ -35,6 +38,15 @@ public class SaloonState extends State{
 			return true;
 		}
 		return false;
+	}
+	public int getTotalCustomer() {
+		return customerCounter;
+	}
+	public int getDissatisfiedCustomer() {
+		return hr.diss();
+	}
+	public int getReformed(){
+		return hr.reformed();
 	}
 	
 }
