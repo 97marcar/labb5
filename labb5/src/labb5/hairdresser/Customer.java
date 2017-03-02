@@ -1,4 +1,7 @@
 package labb5.hairdresser;
+
+import java.util.Random;
+
 /**
  * 
  * @author Marcus, Oscar, Henrik
@@ -34,5 +37,18 @@ public class Customer {
 	 */
 	public int getId(){
 		return id;
+	}
+	public void randomSatisfaction() {
+		Random randy = new Random();
+		if(getSatisfaction() == true) {
+			if((randy.nextInt(100) + 1) <= 20) {
+				changeSatisfaction();
+			}
+		}else if(getSatisfaction() == false) {
+			if((randy.nextInt(100) + 1) <= 80) {
+				changeSatisfaction();
+			}
+		}
+		
 	}
 }
