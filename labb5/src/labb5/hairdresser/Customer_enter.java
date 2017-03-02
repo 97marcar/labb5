@@ -17,10 +17,11 @@ public class Customer_enter implements Event{
 			if(!s.isLineFullOfUnSatisfied()){
 				s.addUnsatisfied(c);
 			}else{
-				c.randomSatisfaction();
+				//kör dissatifiedevent
 			}
 		}
-	}	
+	}
+	
 }
 //Ska till state
 /*
