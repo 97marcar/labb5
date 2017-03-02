@@ -27,6 +27,7 @@ public class Customer_enter implements Event{
 				e.printStackTrace();
 			}
 		}
+		s.createscustomer(time, slump)
 	}
 	
 	public int getTime(){
