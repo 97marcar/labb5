@@ -8,6 +8,7 @@ public class SaloonState extends State{
 	private FIFO f;
 	private int customerCounter = 0;
 	private HaircutReady hr;
+	private int cID = 0;
 	
 	public void addLastLine(Customer c){
 		if(!lineFull()){
@@ -49,4 +50,25 @@ public class SaloonState extends State{
 		return hr.reformed();
 	}
 	
+	public Customer createCustomer(){
+		Customer c = new Customer(cID);
+		cID++;
+		return c;
+	}
+	
+	public void createCustomer_enter(int time){
+		Customer_enter event = new Customer_enter(this, createCustomer(), time);
+		//Här ska den på något sätt läggas in i kön.
+	}
+	
+	public void createHairCutReady(Customer c, int time){
+		HaircutReady event = new HaircutReady();//Konstruktor ej färdig i klassen
+		//Här ska den på något sätt läggas in i kön.
+	}
+	
+	public void createDissatisfiedReturn(Customer c, int time ){
+		DissatisfiedReturn event = new DissatisfiedReturn(c, time);
+		//Här ska den på något sätt läggas in i kön.
+	}
+	//Kanske en metod för att skicka in ett event i eventkön?
 }

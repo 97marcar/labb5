@@ -10,24 +10,32 @@ public class Customer_enter implements Event{
 	private int time;
 	private int endtime;
 	
+	/**
+	 * Constructor where the private variables(s,c,time) are set
+	 * as well as the time of when this event is supposed to end.
+	 * @param s SaloonState
+	 * @param c Customer
+	 * @param time the time of which this is supposed to happen
+	 */
 	public Customer_enter(SaloonState s, Customer c, int time){
 		this.s = s;
 		this.c = c;
 		this.time = time;
+		//kvar att skapa endtime
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see labb5.simulator.Event#triggerEvent()
+	 */
 	public void triggerEvent(){
 		if(c.getSatisfaction()){
 			s.addLastLine(c);
-			//Haricutready 
+			s.createHairCutReady(c, endtime); 
 		}else{
-			try {
-				throw new IOException();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			try {throw new IOException("Fel i enter");
+			}catch (IOException e) {e.printStackTrace();}
 		}
-		s.createscustomer(time, slump)
 	}
 	
 	public int getTime(){
