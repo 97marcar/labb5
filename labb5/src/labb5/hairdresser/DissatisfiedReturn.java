@@ -12,4 +12,10 @@ public class DissatisfiedReturn implements Event {
 				//kör dissatifiedevent
 			}
 	 */
+
+	@Override
+	public void triggerEvent() {
+		// TODO Auto-generated method stub
+		
+	}
 }

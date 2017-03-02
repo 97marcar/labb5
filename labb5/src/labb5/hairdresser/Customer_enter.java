@@ -4,8 +4,7 @@ import java.io.IOException;
 
 import labb5.simulator.Event;
 
-public class Customer_enter implements Event{
-	
+public class Customer_enter implements Event{	
 	private SaloonState s;
 	private Customer c;
 	private int time;
