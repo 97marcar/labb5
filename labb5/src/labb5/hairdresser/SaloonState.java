@@ -31,11 +31,10 @@ public class SaloonState extends State{
 	}
 	
 	public boolean lineFull(){
-		if(f.size() == waitchairs){
+		if(f.size() >= waitchairs){
 			return true;
 		}
 		return false;
 	}
-
 	
 }

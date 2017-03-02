@@ -1,3 +1,4 @@
+	
 package labb5.random;
 
 import java.util.Random;
