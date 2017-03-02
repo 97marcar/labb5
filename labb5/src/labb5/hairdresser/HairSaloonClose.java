@@ -5,17 +5,11 @@ import labb5.simulator.Event;
 public class HairSaloonClose implements Event{
 	private boolean isClosed = false;
 	
-	private void changeClosedState(){
+	public void changeClosedState(){
 		isClosed = !isClosed;
 	}
 	
 	public boolean getClosedState(){
 		return isClosed;
-	}
-
-	@Override
-	public void triggerEvent() {
-		changeClosedState();
-		
 	}
 }

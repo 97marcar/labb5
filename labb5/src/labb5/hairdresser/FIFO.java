@@ -154,5 +154,13 @@ public class FIFO{
 		}
 		return(s);
 	}
+	
+	public static void main(String[] args) {
+		FIFO f1 = new FIFO();
+		FIFO f2 = new FIFO();
+		f1.add(new Integer(1));
+		f2.add(new Integer(1));
+		System.out.println(f1.equals(f2));
+	}
 
 }
