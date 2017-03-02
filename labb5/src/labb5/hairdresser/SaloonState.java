@@ -7,7 +7,7 @@ public class SaloonState extends State{
 	final int waitchairs = 15;
 	private FIFO f;
 	private int customerCounter = 0;
-	HaircutReady hr;
+	private HaircutReady hr;
 	
 	public void addLastLine(Customer c){
 		if(!lineFull()){
