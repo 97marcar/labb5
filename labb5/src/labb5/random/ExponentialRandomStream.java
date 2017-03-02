@@ -20,4 +20,9 @@ public class ExponentialRandomStream {
 	public double next() {
 	  	return -Math.log(rand.nextDouble())/lambda;
 	}
+	
+	public static void main(String[] args){
+		ExponentialRandomStream r = new ExponentialRandomStream(0.1, 10);
+		System.out.println(r.next());
+	}
 }

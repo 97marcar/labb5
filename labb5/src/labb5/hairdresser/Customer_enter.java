@@ -1,25 +1,37 @@
 package labb5.hairdresser;
 
+import java.io.IOException;
+
 import labb5.simulator.Event;
 
 public class Customer_enter implements Event{
-	SaloonState s;
-	Customer c;
-	public Customer_enter(SaloonState s, Customer c){
+	
+	private SaloonState s;
+	private Customer c;
+	private int time;
+	private int endtime;
+	
+	public Customer_enter(SaloonState s, Customer c, int time){
 		this.s = s;
 		this.c = c;
+		this.time = time;
 	}
 	
 	public void triggerEvent(){
 		if(c.getSatisfaction()){
 			s.addLastLine(c);
+			//Haricutready 
 		}else{
-			if(!s.isLineFullOfUnSatisfied()){
-				s.addUnsatisfied(c);
-			}else{
-				//kör dissatifiedevent
+			try {
+				throw new IOException();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+	}
+	
+	public int getTime(){
+		return time;
 	}
 	
 }
