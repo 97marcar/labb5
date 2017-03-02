@@ -5,6 +5,7 @@ import labb5.simulator.Event;
 public class Customer_enter implements Event{
 	SaloonState s;
 	Customer c;
+	HaircutReady r;
 	public Customer_enter(SaloonState s, Customer c){
 		this.s = s;
 		this.c = c;
@@ -17,7 +18,7 @@ public class Customer_enter implements Event{
 			if(!s.isLineFullOfUnSatisfied()){
 				s.addUnsatisfied(c);
 			}else{
-				//kör dissatifiedevent
+				r.randomSatisfaction();
 			}
 		}
 	}
