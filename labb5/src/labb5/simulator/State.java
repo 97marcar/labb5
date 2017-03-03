@@ -8,4 +8,5 @@ import labb5.hairdresser.HaircutReady;
 
 public class State extends Observable{
 	
+	public Event currentEvent;
 }

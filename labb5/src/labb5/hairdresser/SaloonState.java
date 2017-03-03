@@ -1,5 +1,6 @@
 package labb5.hairdresser;
 
+import labb5.simulator.Event;
 import labb5.simulator.State;
 
 public class SaloonState extends State{
@@ -9,6 +10,7 @@ public class SaloonState extends State{
 	private int customerCounter = 0;
 	private HaircutReady hr;
 	private int cID = 0;
+	private Event currentEvent;
 	
 	public void addLastLine(Customer c){
 		if(!lineFull()){
@@ -71,4 +73,13 @@ public class SaloonState extends State{
 		//Här ska den på något sätt läggas in i kön.
 	}
 	//Kanske en metod för att skicka in ett event i eventkön?
-}
+	//FUNKAR INTE :( ska användas i view.
+//	public void setCurrentEvent(Event currentEvent) {
+//		this.currentEvent = currentEvent;
+//	}
+//	public Event getCurrentEvent(Event event) {
+//		return currentEvent;
+//		
+//	}
+		
+	}

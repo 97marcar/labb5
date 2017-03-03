@@ -9,12 +9,15 @@ public class HaircutReady implements Event {
 	private Customer c;
 	private int disCounter;
 	private int nowHappy;
+	private SaloonState s;
+	private int endtime;
 
 	private void randomSatisfaction() {
 		if(c.getSatisfaction() == true) {
 			if((randy.nextInt(100) + 1) <= 20) {
 			c.changeSatisfaction();
 			disCounter++;
+			s.createDissatisfiedReturn(c, endtime);
 			}
 		}else if(c.getSatisfaction() == false) {
 			if((randy.nextInt(100) + 1) <= 80) {
@@ -39,5 +42,11 @@ public class HaircutReady implements Event {
 	public void triggerEvent() {
 		randomSatisfaction();
 		
+	}
+
+	@Override
+	public int getTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

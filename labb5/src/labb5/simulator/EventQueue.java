@@ -2,6 +2,7 @@ package labb5.simulator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 public class EventQueue {
@@ -32,13 +33,26 @@ public class EventQueue {
 	public void removeFirst(){
 		eventQ.remove(0);
 	}
+	public void clear() {
+		eventQ.clear();
+	}
+	public int size() {
+		return eventQ.size();
+	}
+	
 	
 	public boolean isEmpty(){
 		return(eventQ.isEmpty());
 	}
 	
 	public Event getFirst(){
-		return(eventQ.get(0));
+		if(eventQ.isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		else {
+			return(eventQ.get(0));
+	}
+		
 	}
 
 }

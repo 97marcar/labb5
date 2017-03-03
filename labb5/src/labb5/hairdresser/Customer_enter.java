@@ -29,7 +29,10 @@ public class Customer_enter implements Event{
 	 * @see labb5.simulator.Event#triggerEvent()
 	 */
 	public void triggerEvent(){
+		//funkar inte, why?
+		//s.setCurrentEvent(this);
 		if(c.getSatisfaction()){
+			
 			s.addLastLine(c);
 			s.createHairCutReady(c, endtime); 
 		}else{

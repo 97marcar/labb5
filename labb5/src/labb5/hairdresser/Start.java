@@ -1,4 +1,6 @@
-package labb5.simulator;
+package labb5.hairdresser;
+
+import java.awt.EventQueue;
 
 import labb5.hairdresser.SaloonState;
 import labb5.simulator.Event;
@@ -15,8 +17,18 @@ public class Start implements Event{
 
 	
 	public void triggerEvent() {
+		//state.setCurrentEvent(this);
 		
-		
+	}
+	public String toString() {
+		return "Start";
+	}
+
+
+	@Override
+	public int getTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
