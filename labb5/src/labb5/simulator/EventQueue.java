@@ -13,6 +13,8 @@ public class EventQueue {
 		sort();
 	}
 	
+	
+	//Byggd på metoden Insertsort enl HJ IF14
 	public void sort() {
 		int n = eventQ.size();
 		for (int j = 1; j < n; j++) {
