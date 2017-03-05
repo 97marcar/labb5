@@ -1,5 +1,7 @@
 package labb5.hairdresser;
 
+import labb5.random.ExponentialRandomStream;
+import labb5.random.UniformRandomStream;
 import labb5.simulator.Event;
 import labb5.simulator.State;
 
@@ -11,6 +13,18 @@ public class SaloonState extends State{
 	private HaircutReady hr;
 	private int cID = 0;
 	private Event currentEvent;
+	private double hmin=1, hmax=2;
+	private double dmin=1, dmax=2;
+	long seed=1116;
+	double lambda=1.2;
+	
+	public SaloonState(){
+		ExponentialRandomStream timeNewCustomer = new ExponentialRandomStream (lambda, seed);
+		UniformRandomStream timeHairCut = new UniformRandomStream(hmin,hmax,seed);
+		UniformRandomStream timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
+		// Chansen att bli missnöjd hanteras just nu i HairCutReady, bör man flytta vissar delar därifrån?
+	}
+	
 	
 	public void addLastLine(Customer c){
 		if(!lineFull()){
