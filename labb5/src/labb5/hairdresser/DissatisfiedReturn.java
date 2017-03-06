@@ -5,12 +5,13 @@ import labb5.simulator.Event;
 public class DissatisfiedReturn implements Event {
 	private SaloonState s;
 	private Customer c;
-	private int time;
-	private int endtime;
+	private double starttime;
+	private double endtime;
 	
-	public DissatisfiedReturn(Customer c, int time){
+	public DissatisfiedReturn(Customer c, double starttime, double endtime){
 		this.c = c;
-		this.time = time;
+		this.starttime = starttime;
+		this.endtime = starttime+endtime;
 		//kvar att skapa endtime
 	}
 	
@@ -25,7 +26,7 @@ public class DissatisfiedReturn implements Event {
 		
 	}
 	
-	public int getTime(){
-		return time;
+	public double getTime(){
+		return starttime;
 	}
 }

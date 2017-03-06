@@ -18,4 +18,10 @@ public class HairSaloonClose implements Event{
 		changeClosedState();
 		
 	}
+
+	@Override
+	public int getTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

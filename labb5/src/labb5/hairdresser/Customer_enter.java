@@ -7,8 +7,8 @@ import labb5.simulator.Event;
 public class Customer_enter implements Event{	
 	private SaloonState s;
 	private Customer c;
-	private int time;
-	private int endtime;
+	private double starttime;
+	private double endtime;
 	
 	/**
 	 * Constructor where the private variables(s,c,time) are set
@@ -17,10 +17,11 @@ public class Customer_enter implements Event{
 	 * @param c Customer
 	 * @param time the time of which this is supposed to happen
 	 */
-	public Customer_enter(SaloonState s, Customer c, int time){
+	public Customer_enter(SaloonState s, Customer c, double starttime, double endtime){
 		this.s = s;
 		this.c = c;
-		this.time = time;
+		this.starttime = starttime;
+		this.endtime = starttime+endtime;
 		//kvar att skapa endtime
 	}
 	
@@ -30,7 +31,7 @@ public class Customer_enter implements Event{
 	 */
 	public void triggerEvent(){
 		//funkar inte, why?
-		//s.setCurrentEvent(this);
+		s.setCurrentEvent(this);
 		if(c.getSatisfaction()){
 			
 			s.addLastLine(c);
@@ -41,8 +42,8 @@ public class Customer_enter implements Event{
 		}
 	}
 	
-	public int getTime(){
-		return time;
+	public double getTime(){
+		return starttime;
 	}
 	
 }

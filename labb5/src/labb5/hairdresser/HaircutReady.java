@@ -5,24 +5,33 @@ import java.util.Random;
 import labb5.simulator.Event;
 
 public class HaircutReady implements Event {
-	private Random randy = new Random();
+	private Random randy;
 	private Customer c;
-	private int disCounter;
-	private int nowHappy;
 	private SaloonState s;
-	private int endtime;
+	private double starttime;
+	private double endtime;
+	private final int FAIL_PROCENT = 20;
+	
+	public HaircutReady(SaloonState s, Customer c,long seed, 
+			double starttime, double endtime){
+		this.c = c;
+		this.randy = new Random(seed);
+		this.s = s;
+		this.starttime = starttime;
+		this.endtime = starttime+endtime;
+	}
 
 	private void randomSatisfaction() {
 		if(c.getSatisfaction() == true) {
-			if((randy.nextInt(100) + 1) <= 20) {
+			if((randy.nextInt(100) + 1) <= FAIL_PROCENT) {
 			c.changeSatisfaction();
-			disCounter++;
+			s.addUnsatisfied();
 			s.createDissatisfiedReturn(c, endtime);
 			}
 		}else if(c.getSatisfaction() == false) {
-			if((randy.nextInt(100) + 1) <= 80) {
+			if((randy.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
 				c.changeSatisfaction();
-				nowHappy++;
+				//nowHappy++;
 			}
 		}
 	}
@@ -30,12 +39,6 @@ public class HaircutReady implements Event {
 
 	public boolean pay(boolean isSatisfied) {
 		return isSatisfied;
-	}
-	public int reformed(){
-		return nowHappy;
-	}
-	public int diss(){
-		return disCounter;
 	}
 
 	@Override
@@ -45,8 +48,8 @@ public class HaircutReady implements Event {
 	}
 
 	@Override
-	public int getTime() {
+	public double getTime() {
 		// TODO Auto-generated method stub
-		return 0;
+		return starttime;
 	}
 }

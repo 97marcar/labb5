@@ -1,5 +1,9 @@
+package labb5.hairdresser;
 
 import java.awt.EventQueue;
+
+
+
 
 import labb5.simulator.Event;
 
@@ -28,5 +32,6 @@ public class Stop implements Event{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }
