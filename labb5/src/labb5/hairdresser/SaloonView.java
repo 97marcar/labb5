@@ -1,5 +1,5 @@
 package labb5.hairdresser;
-
+import labb5.simulator.EventQueue;
 import java.util.Observable;
 
 import labb5.simulator.View;
@@ -11,10 +11,13 @@ public class SaloonView extends View{
 	private FIFO f;
 	private HaircutReady ready;
 	private Start start;
-	public SaloonView(SaloonState state) {
-		
+	private EventQueue q;
+	
+	public SaloonView(SaloonState state, EventQueue q) {
+		saloonInitialLayout();
 	}
-	public void SaloonInitialLayout() {
+	
+	public void saloonInitialLayout() {
 		System.out.println("Closing time of the day......" + state.getClosingTime());
 		System.out.println("Total number of chairs" + state.getDressers());
 		System.out.println("Maximum queue size" + state.getWaitChairs());
@@ -29,19 +32,16 @@ public class SaloonView extends View{
 				"InQ" + "\t" + "Cut" +"\t" + " Lost" + "\t" + "Ret " +"-" );	
 	}
 
-	public void SaloonEndLayout() {
+	public void saloonEndLayout() {
 		System.out.println("Number of customers" + state.getTotalCustomer());
 		System.out.println("Number of unsatisfied customers" + state.getUnsatisfied());
 		
 	}
 	public void update(Observable o, Object arg) {
-		
-		if(arg instanceof Start) {
-			SaloonInitialLayout();
-			System.out.printf("%d, %d, %d, %d, %d, %d, %d")
-		}
-		
-		
+		System.out.print("%d\t %s\t	%i\t %i\t %d\t %d\t %i\t %i\t %i\t %i\t" q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomID(),
+				state.getIdle(), state.totalIdle(), state.totalWait(), state.getWaitLine(), state.getCutLine(), state.getLostC(), state.getUnsatisfied());
 	}
+	
+	
 
 }
