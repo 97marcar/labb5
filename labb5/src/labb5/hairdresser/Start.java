@@ -20,13 +20,13 @@ public class Start implements Event{
 		//state.setCurrentEvent(this);
 		
 	}
-	public String toString() {
+	public String getName() {
 		return "StartHSS";
 	}
 
 
 	@Override
-	public int getTime() {
+	public double getTime() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
