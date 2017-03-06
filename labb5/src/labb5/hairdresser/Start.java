@@ -21,7 +21,7 @@ public class Start implements Event{
 		
 	}
 	public String toString() {
-		return "Start";
+		return "StartHSS";
 	}
 
 
