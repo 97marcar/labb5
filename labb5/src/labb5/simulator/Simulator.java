@@ -6,7 +6,11 @@ import labb5.hairdresser.Customer;
 
 public class Simulator {
 	
-	private EventQueue eventQ = new EventQueue();
+	private EventQueue eventQ;
+	
+	public Simulator(EventQueue eventQ){
+		this.eventQ = eventQ;
+	}
 	
 	public void start(){
 
