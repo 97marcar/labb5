@@ -10,8 +10,16 @@ public class HaircutReady implements Event {
 	private SaloonState s;
 	private double starttime;
 	private double endtime;
-	private final int FAIL_PROCENT = 20;
+	private final int FAIL_PROCENT = 20; //Change of failiure
 	
+	/**
+	 * 
+	 * @param s SaloonState
+	 * @param c Customer
+	 * @param seed randomseed
+	 * @param starttime start time
+	 * @param endtime end time
+	 */
 	public HaircutReady(SaloonState s, Customer c,long seed, 
 			double starttime, double endtime){
 		this.c = c;
@@ -25,47 +33,55 @@ public class HaircutReady implements Event {
 		if(c.getSatisfaction() == true) {
 			if((randy.nextInt(100) + 1) <= FAIL_PROCENT) {
 			c.changeSatisfaction();
-			s.addUnsatisfied();
 			s.createDissatisfiedReturn(c, endtime);
 			}
 		}else if(c.getSatisfaction() == false) {
 			if((randy.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
 				c.changeSatisfaction();
-				//nowHappy++;
 			}
 		}
 	}
-	// Bör något mer göras här
-
-	public boolean pay(boolean isSatisfied) {
-		return isSatisfied;
-	}
+	
+	/**
+	 * @return chance(percent) of customer getting unsatisfied
+	 */
 	public int getFailProcent() {
 		return FAIL_PROCENT;
 		
 	}
 
-	@Override
+	/**
+	 * Changes the satisfaction of the customer randomly 
+	 * If the customer is satisfied it is removed from the queue
+	 * and can now leave in peace with a new fresh haircut
+	 */
 	public void triggerEvent() {
 		randomSatisfaction();
+		if(c.getSatisfaction()){
+			s.removeFromQueue(c);
+			s.continueQueue();
+		}
 		
 	}
 
-	@Override
+	/**
+	 * @return start time of this event
+	 */
 	public double getTime() {
-		// TODO Auto-generated method stub
 		return starttime;
 	}
 
-	@Override
+	/**
+	 * @return name of this event	
+	 *  */
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Ready";
 	}
 
-	@Override
+	/**
+	 * @return cutomerID
+	 */
 	public int getCustomerID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return c.getId();
 	}
 }

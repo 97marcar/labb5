@@ -25,16 +25,15 @@ public class Customer_enter implements Event{
 		//kvar att skapa endtime
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see labb5.simulator.Event#triggerEvent()
+	/**
+	 * Adds a customer to the line.
+	 * This event should only contain satisfied customers
+	 * this method throws an exception otherwise.
 	 */
 	public void triggerEvent(){
-		//funkar inte, why?
-		s.setCurrentEvent(this);
 		if(c.getSatisfaction()){
 			
-			if(s.addLastLine(c, endtime)){
+			if(s.addLastLine(c)){
 				s.createHairCutReady(c, endtime);
 			}
 			 
@@ -44,53 +43,25 @@ public class Customer_enter implements Event{
 		}
 	}
 	
+	/**
+	 * @return start time of this event
+	 */
 	public double getTime(){
 		return starttime;
 	}
 
-	@Override
+	/**
+	 * @return name of the event
+	 */
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Enter";
 	}
 
-	@Override
+	/**
+	 * @return customerID
+	 */
 	public int getCustomerID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return c.getId();
 	}
 	
 }
-//Ska till state
-/*
-public int getDressers() {
-	return dressers;
-	
-}
-public int getWaitChairs() {
-	return waitchairs;
-	
-}
-public boolean isFull() {
-	if(f.size() > waitchairs) {
-		return true;
-	}
-	return false;
-	
-}
-public void addLastLine(Object item) {
-	s.add(item);
-}
-public void removeFromQueue() {
-	f.removeFirst();
-	
-}
-public void addFrontLine(Object item) {
-	f.addFirst(item);
-	
-	
-}
-public void removeLast() {
-	f.removeBack();
-	
-}*/

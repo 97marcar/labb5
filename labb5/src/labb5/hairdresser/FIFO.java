@@ -32,25 +32,61 @@ public class FIFO{
 	 * exactly the same apart from the first object)
 	 * 
 	 * if the list is empty it throws an error.
+	 * @return the removed object.
 	 */
-	public void removeFirst(){
+	public Object removeFirst(){
 		if(isEmpty()){
 			throw new NoSuchElementException();
 		}else{
-			queue = queue.subList(1, queue.size());
+			 List<Object> temp =  new ArrayList<Object>();
+			 temp = queue;
+			 queue = queue.subList(1, queue.size());
+			 return(temp.get(0));
 			
 		}
 		
 	}
-	public void removeBack() {
-		queue.remove(queue.size()-1);
-	}
 	
+	/**
+	 * Add object to a specific index of the queue
+	 * @param i index
+	 * @param o object
+	 */
+	public void addObjectMiddle(int i, Object o){
+		 queue.add(i, o);
+	}
+	/**
+	 * removes last object
+	 */
+	public void removeBack() {
+		if(isEmpty()){
+			throw new NoSuchElementException();
+		}else{
+			queue.remove(queue.size()-1);
+		}
+	}	
 	/**
 	 * @return size of queue
 	 */
 	public int size(){
 		return(queue.size());
+	}
+	
+	/**
+	 * Removes the first occurring specific object in the queue 
+	 * @param o object
+	 * @return true if something was remove else false
+	 */
+	public boolean removeSpecific(Object o){
+		for(int i = 0; i < queue.size(); i++){
+			if(o.equals(queue.get(i))){
+				queue.remove(o);
+				return true;
+			}
+		}
+		return false;
+		
+		
 	}
 	
 	/**

@@ -8,37 +8,53 @@ public class DissatisfiedReturn implements Event {
 	private double starttime;
 	private double endtime;
 	
+	/**
+	 * 
+	 * @param c customer
+	 * @param starttime start time
+	 * @param endtime end to,e
+	 */
 	public DissatisfiedReturn(Customer c, double starttime, double endtime){
 		this.c = c;
 		this.starttime = starttime;
 		this.endtime = starttime+endtime;
-		//kvar att skapa endtime
 	}
 	
+	/**
+	 * Add the returning customer to the line.
+	 * Except when it is full of unsatified customers, the it will create
+	 * a new event of the same kind but with a new start time.
+	 */
 	public void triggerEvent() {
 		if(!s.isLineFullOfUnSatisfied()){
-			s.addUnsatisfied(c);
+			s.addLastLine(c);
 			s.createHairCutReady(c, endtime); 
 		}else{
-			//Om kön är full gör man ett nytt objekt om en viss tid.
 			s.createDissatisfiedReturn(c, endtime);
 		}
 		
 	}
 	
+	/**
+	 * @return start time of this event
+	 */
 	public double getTime(){
 		return starttime;
 	}
 
-	@Override
+	/**
+	 * @return name of the string
+	 */
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Return";
 	}
 
-	@Override
+	/**
+	 * @return customerID
+	 */
 	public int getCustomerID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return c.getId();
 	}
 }

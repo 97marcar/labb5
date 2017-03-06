@@ -8,31 +8,42 @@ import labb5.simulator.Event;
 public class Start implements Event{
 	SaloonState state;
 	
+	/**
+	 * @param state Saloonstate
+	 */
 	public Start(SaloonState state) {
 		this.state = state;
 		
 	}
 
-	
+	/**
+	 * Creates a Customer enter
+	 */
 	public void triggerEvent() {
 		state.createCustomer_enter();
 		
 	}
+	
+	/**
+	 * @return name of the event
+	 */
 	public String getName() {
 		return "StartHSS";
 	}
 
 
-	@Override
+	/**
+	 * @return start time of the event (should always be 0)
+	 */
 	public double getTime() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
-	@Override
+	/**
+	 * @return 0, No use in this event
+	 */
 	public int getCustomerID() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

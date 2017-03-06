@@ -1,5 +1,7 @@
 package labb5.hairdresser;
 
+import java.io.IOException;
+
 import labb5.random.ExponentialRandomStream;
 import labb5.random.UniformRandomStream;
 import labb5.simulator.Event;
@@ -12,9 +14,7 @@ public class SaloonState extends State{
 	private FIFO waitLine;
 	private FIFO cutLine;
 	private int customerCounter = 0;
-	private HaircutReady hr;
 	private int cID = 0;
-	private Event currentEvent;
 	private double hmin=1, hmax=2;
 	private double dmin=1, dmax=2;
 	private long seed=1116;
@@ -25,41 +25,107 @@ public class SaloonState extends State{
 	private int numberOfUnsatified;
 	private int numberOfLostCustomers;
 	private EventQueue q;
+	private boolean openState = true;
+	private double totalIdle = 0;
+	private double totalWait = 0;
+	private final double CLOSINGTIME = 7.00;
 	
+	/**
+	 * Creates objects from the random package. These are used for time.
+	 * Also adds a Close event at CLOSINGTIME
+	 * @param q EventQueue
+	 */
 	public SaloonState(EventQueue q){
 		timeNewCustomer = new ExponentialRandomStream (lambda, seed);
 		timeHairCut = new UniformRandomStream(hmin,hmax,seed);
 		timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
 		// Chansen att bli missnöjd hanteras just nu i HairCutReady, bör man flytta vissar delar därifrån?
 		this.q = q;
+
+		Event HairSaloonOpenOrClose = new HairSaloonOpenOrClose(this, CLOSINGTIME);
+		q.add(HairSaloonOpenOrClose);
+		
+		
 	}
 	
-	
-	public boolean addLastLine(Customer c, double time){
+	/**
+	 * Adds a customer to the end of the line. If the line is full the customer leaves. If the customer
+	 * is unsatisfied he/she will return later, else not.
+	 * @param c Customer
+	 * @param time if the queue is full of unsatisfied customers this is the start time of the new DR object
+	 * @return true if it successfully added a customer to the line else false
+	 */
+	public boolean addLastLine(Customer c){
 		if(!cutlineFull()){
 			cutLine.add(c);
-			customerCounter++;
+			if(c.getSatisfaction()) customerCounter++;
 			return(true);
 		}else if(!waitlineFull()){
 			waitLine.add(c);
-			customerCounter++;
+			if(c.getSatisfaction()){
+				customerCounter++;
+			}else{
+				addUnsatisfiedFirst(c);
+			}
 			return(true);
 		}else{
 			if(c.getSatisfaction()){
 				numberOfLostCustomers++;
 			}else{
-				
+				addUnsatisfiedFirst(c);
 			}
-			
 		}
 		return(false);
-		
 	}
 	
-	public void addUnsatisfied(Customer c){
-		
+	//Lägger till en missnöjd kund framför nöjda och bakom andra missnöjda
+	//Är kön redan full tas går den längst bak som alltid ska vara nöjd
+	//Skulle den längst bak mot förmodan vara nöjd kastas en Exception.
+	private boolean addUnsatisfiedFirst(Customer c){
+		Customer t;
+		for(int i = 0; i < waitLine.size(); i++){
+			t = (Customer) waitLine.getIndex(i);
+			if(t.getSatisfaction()){
+				waitLine.addObjectMiddle(i, c);
+				return true;
+			}
+		}
+		if(waitLine.size() > WAITCHAIRS){
+			if(!isLineFullOfUnSatisfied()){
+				waitLine.removeBack();
+				numberOfLostCustomers++;
+				customerCounter--;
+			}else{
+				try {throw new IOException("Fel i addUnsatisfiedFirst");
+				}catch (IOException e) {e.printStackTrace();}
+			}
+		}
+		return false;
 	}
 	
+	/**
+	 * Removes a customer from the cutLine queue
+	 * @param c
+	 */
+	public void removeFromQueue(Customer c){
+		cutLine.removeSpecific(c);
+	}
+	
+	/**
+	 * Removes thefirst 
+	 */
+	public void continueQueue(){
+		if(!cutlineFull()){
+			cutLine.add(waitLine.removeFirst());
+		}else{
+			try {throw new IOException("Fel i continueQueue");
+			}catch (IOException e) {e.printStackTrace();}
+		}
+	}
+	/**
+	 * Checks if the line is full of unsatisfied customers
+	 * @return true if it is else false
+	 */
 	public boolean isLineFullOfUnSatisfied(){
 		Customer t;
 		for(int i = 0; i < waitLine.size(); i++){
@@ -72,6 +138,10 @@ public class SaloonState extends State{
 		return true;
 	}
 	
+	/**
+	 * Checks if the waitline (line people waiting to get their hair cut) is full.
+	 * @return true if it is else false
+	 */
 	public boolean waitlineFull(){
 		if(waitLine.size() >= WAITCHAIRS){
 			return true;
@@ -79,6 +149,10 @@ public class SaloonState extends State{
 		return false;
 	}
 	
+	/**
+	 * Checks if the cutline (line people getting their hair cut) is full.
+	 * @return true if it is else false
+	 */
 	public boolean cutlineFull(){
 		if(cutLine.size() >= DRESSERS){
 			return true;
@@ -86,93 +160,217 @@ public class SaloonState extends State{
 		return false;
 	}
 	
-	public int getTotalCustomer() {
-		return customerCounter;
-	}
-	
+	/**
+	 * Creates a new customer
+	 * @return the freshly made customer
+	 */
 	public Customer createCustomer(){
 		Customer c = new Customer(cID);
 		cID++;
 		return c;
 	}
 	
-	public void createCustomer_enter(){
-		Customer_enter event = new Customer_enter(this, createCustomer(), timeNewCustomer.next(), timeHairCut.next());
-		q.add(event);
+	private void increaseIdleAndWait(double time){
+		totalIdle += time * getIdle(); 
+		totalWait += time * waitLine.size();
+		
 	}
 	
+	/**
+	 * If the store is open this method creates a new Customer enter object with a fresh customer 
+	 * and add it to the eventqueue.
+	 * It also increase the total Idle time and total Wait time.
+	 */
+	public void createCustomer_enter(){
+		if(openState){
+			double time = timeNewCustomer.next();
+			increaseIdleAndWait(time);
+			Customer_enter event = new Customer_enter(this, createCustomer(), time, timeHairCut.next());
+			q.add(event);
+			setChangedAndNotify();
+		}
+		
+	}
+	
+	/**
+	 * Creates a new haircutready object and adds it to the eventqueue
+	 * It also increase the total Idle time and total Wait time.
+	 * @param c customer
+	 * @param time start time of the event
+	 */
 	public void createHairCutReady(Customer c, double time){
+		increaseIdleAndWait(time);
 		HaircutReady event = new HaircutReady(this, c, seed, time, timeDissatisfiedReturn.next());
 		q.add(event);
+		setChangedAndNotify();
 	}
 	
+	/**
+	 * Creates a DissatisfiedReturn event and adds it to the eventqueue.
+	 * It also increase the total Idle time and total Wait time.
+	 * @param c customer 
+	 * @param time start time of the event
+	 */
 	public void createDissatisfiedReturn(Customer c, double time ){
+		increaseIdleAndWait(time);
 		DissatisfiedReturn event = new DissatisfiedReturn(c, time, timeHairCut.next());
 		q.add(event);
+		setChangedAndNotify();
 	}
-	//Kanske en metod för att skicka in ett event i eventkön?
-	//FUNKAR INTE :( ska användas i view.
-	public void setCurrentEvent(Event currentEvent) {
+	
+	/**
+	 * Opens or closes the hairsaloon
+	 */
+	public void changeOpenState(){
+		openState = !openState;
+	}
+	
+	/**
+	 * Increases the amount of unsatisfied customers 
+	 */
+	public void addUnsatisfied(){
+		numberOfUnsatified++;
+	}
+	
+	
+	/**
+	 * @return total amount of customers that have or will be cut.
+	 */
+	public int getTotalCustomer() {
+		return customerCounter;
+	}
+	
+	/**
+	 * @return true if the hairsaloon is open else false
+	 */
+	public boolean getOpenState(){
+		return openState;
+	}
+
+	
+	/**
+	 * @return number of unsatisfied customers
+	 */
+	public int getUnsatisfied() {
+		return numberOfUnsatified;
+	}
+	
+	/**
+	 * @return amount of waitchairs
+	 */
+	public int getWaitChairs(){
+		return WAITCHAIRS;
+	}
+	
+	/**
+	 * @return amount of hairdressers
+	 */
+	public int getDressers(){
+		return DRESSERS;
+	}
+	
+	/**
+	 * @return lambda (customers/timeunit entering)
+	 */
+	public double getLambda(){
+		return lambda;
+	}
+	
+	/**
+	 * @return hmax (part of the cutting time interval)
+	 */
+	public double gethmax(){
+		return hmax;
+	}
+	
+	/**
+	 * @return hmin (part of the cutting time interval)
+	 */
+	public double gethmin(){
+		return hmin;
+	}
+	
+	/**
+	 * @return dmax (part of the return time interval) 
+	 */
+	public double getdmax(){
+		return dmax;
+	}
+	
+	/**
+	 * @return dmin (part of the return time interval)
+	 */
+	public double getdmin(){
+		return dmin;
+	}
+	
+	/**
+	 * @return seed (for random generators)
+	 */
+	public long getSeed(){
+		return seed;
+	}
+	
+	/**
+	 * @return amount of idling hair dressers
+	 */
+	public int getIdle(){
+		return(DRESSERS-cutLine.size());
+	}
+	
+	/**
+	 * @return total of hairdresser idle time
+	 */
+	public double getTotalIdle(){
+		return totalIdle;
+	}
+	
+	/**
+	 * @return total customer waiting time
+	 */
+	public double getTotalWait(){
+		return totalWait;
+	}
+	
+	/**
+	 * @return amount of people being cut right now.
+	 */
+	public int getCutLine(){
+		return(cutLine.size());
+	}
+	
+	/**
+	 * @return amount of people waiting to be cut right now.
+	 */
+	public int getWaitLine(){
+		return(waitLine.size());
+	}
+	
+	/**
+	 * @return total amount of lost customers
+	 */
+	public int getLostCustomer(){
+		return(numberOfLostCustomers);
+	}
+	
+	/**
+	 * @return closing time
+	 */
+	public double getClosingTime(){
+		return CLOSINGTIME;
+	}
+	
+	private void setChangedAndNotify(){
+		setChanged();
+		notifyObservers();
+	}
+		
+}
+/**
+ * public void setCurrentEvent(Event currentEvent) {
 		this.currentEvent = currentEvent;	
 	}
 	public Event getCurrentEvent(Event event) {
 		return currentEvent;
 		
-	}
-	
-	public void addUnsatisfied(){
-		numberOfUnsatified++;
-	}
-	public int getUnsatisfied() {
-		return numberOfUnsatified;
-	}
-	
-	public int getWaitChairs(){
-		return WAITCHAIRS;
-	}
-	
-	public int getDressers(){
-		return DRESSERS;
-	}
-	
-	public double getLambda(){
-		return lambda;
-	}
-	
-	public double gethmax(){
-		return hmax;
-	}
-	
-	public double gethmin(){
-		return hmin;
-	}
-	
-	public double getdmax(){
-		return dmax;
-	}
-	
-	public double getdmin(){
-		return dmin;
-	}
-	
-	public long getSeed(){
-		return seed;
-	}
-	
-	public int getIdle(){
-		return(DRESSERS-cutLine.size());
-	}
-	
-	public int getCutLine(){
-		return(cutLine.size());
-	}
-	
-	public int getWaitLine(){
-		return(waitLine.size());
-	}
-	
-	public int getLostCustomer(){
-		return(numberOfLostCustomers);
-	}
-		
-}
+	}*/
