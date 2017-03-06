@@ -40,6 +40,10 @@ public class HaircutReady implements Event {
 	public boolean pay(boolean isSatisfied) {
 		return isSatisfied;
 	}
+	public int getFailProcent() {
+		return FAIL_PROCENT;
+		
+	}
 
 	@Override
 	public void triggerEvent() {

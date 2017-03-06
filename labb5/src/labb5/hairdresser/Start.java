@@ -20,9 +20,9 @@ public class Start implements Event{
 		//state.setCurrentEvent(this);
 		
 	}
-	public String toString() {
-		return "StartHSS";
-	}
+//	public String toString() {
+//		return "StartHSS";
+//	}
 
 
 	@Override

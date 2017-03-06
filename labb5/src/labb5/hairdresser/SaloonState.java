@@ -97,6 +97,9 @@ public class SaloonState extends State{
 	public void addUnsatisfied(){
 		numberOfUnsatified++;
 	}
+	public int getUnsatisfied() {
+		return numberOfUnsatified;
+	}
 	
 	public int getWaitChairs(){
 		return WAITCHAIRS;
