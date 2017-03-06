@@ -3,6 +3,7 @@ package labb5.hairdresser;
 import labb5.random.ExponentialRandomStream;
 import labb5.random.UniformRandomStream;
 import labb5.simulator.Event;
+import labb5.simulator.EventQueue;
 import labb5.simulator.State;
 
 public class SaloonState extends State{
@@ -23,12 +24,14 @@ public class SaloonState extends State{
 	private UniformRandomStream timeDissatisfiedReturn;
 	private int numberOfUnsatified;
 	private int numberOfLostCustomers;
+	private EventQueue q;
 	
-	public SaloonState(){
+	public SaloonState(EventQueue q){
 		timeNewCustomer = new ExponentialRandomStream (lambda, seed);
 		timeHairCut = new UniformRandomStream(hmin,hmax,seed);
 		timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
 		// Chansen att bli missnöjd hanteras just nu i HairCutReady, bör man flytta vissar delar därifrån?
+		this.q = q;
 	}
 	
 	
@@ -95,17 +98,17 @@ public class SaloonState extends State{
 	
 	public void createCustomer_enter(){
 		Customer_enter event = new Customer_enter(this, createCustomer(), timeNewCustomer.next(), timeHairCut.next());
-		//Här ska den på något sätt läggas in i kön.
+		q.add(event);
 	}
 	
 	public void createHairCutReady(Customer c, double time){
 		HaircutReady event = new HaircutReady(this, c, seed, time, timeDissatisfiedReturn.next());
-		//Här ska den på något sätt läggas in i kön.
+		q.add(event);
 	}
 	
 	public void createDissatisfiedReturn(Customer c, double time ){
 		DissatisfiedReturn event = new DissatisfiedReturn(c, time, timeHairCut.next());
-		//Här ska den på något sätt läggas in i kön.
+		q.add(event);
 	}
 	//Kanske en metod för att skicka in ett event i eventkön?
 	//FUNKAR INTE :( ska användas i view.

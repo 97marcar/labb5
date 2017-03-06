@@ -7,17 +7,15 @@ import labb5.simulator.Event;
 
 public class Start implements Event{
 	SaloonState state;
-	EventQueue event;
 	
-	public Start(SaloonState state, EventQueue event) {
+	public Start(SaloonState state) {
 		this.state = state;
-		this.event = event;
 		
 	}
 
 	
 	public void triggerEvent() {
-		//state.setCurrentEvent(this);
+		state.createCustomer_enter();
 		
 	}
 	public String getName() {
@@ -27,6 +25,13 @@ public class Start implements Event{
 
 	@Override
 	public double getTime() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int getCustomerID() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

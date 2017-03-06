@@ -8,12 +8,12 @@ import java.awt.EventQueue;
 import labb5.simulator.Event;
 
 public class Stop implements Event{
-	SaloonState state;
-	EventQueue event;
+	private SaloonState state;
+	private double time;
 	
-	public Stop(SaloonState state, EventQueue event) {
+	public Stop(SaloonState state, double time) {
 		this.state = state;
-		this.event = event;
+		this.time = time;
 		
 	}
 
@@ -29,7 +29,7 @@ public class Stop implements Event{
 	@Override
 	public double getTime() {
 		// TODO Auto-generated method stub
-		return 0;
+		return time;
 	}
 
 

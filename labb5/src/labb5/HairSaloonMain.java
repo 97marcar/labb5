@@ -1,18 +1,21 @@
 package labb5;
 
-import labb5.hairdresser.SaloonState;
-import labb5.hairdresser.SaloonView;
-import labb5.simulator.EventQueue;
-import labb5.simulator.Simulator;
+import labb5.hairdresser.*;
+import labb5.simulator.*;
 
 public class HairSaloonMain {
 	
-	public void main (String[] args) {
-		SaloonState state = new SaloonState();
+	public static void main (String[] args) {
 		EventQueue queue = new EventQueue();
-		Simulator sim = new Simulator();
+		SaloonState state = new SaloonState(queue);
+		Start start = new Start(state);
+		queue.add(start);
+		Stop stopp = new Stop(state, 999999);
+		queue.add(stopp);
+		Simulator sim = new Simulator(queue);
 		SaloonView view = new SaloonView(state, queue);
 		
+		sim.start();
 	}
 
 }
