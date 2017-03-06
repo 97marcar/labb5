@@ -56,4 +56,16 @@ public class HaircutReady implements Event {
 		// TODO Auto-generated method stub
 		return starttime;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Ready";
+	}
+
+	@Override
+	public int getCustomerID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -34,8 +34,10 @@ public class Customer_enter implements Event{
 		s.setCurrentEvent(this);
 		if(c.getSatisfaction()){
 			
-			s.addLastLine(c);
-			s.createHairCutReady(c, endtime); 
+			if(s.addLastLine(c, endtime)){
+				s.createHairCutReady(c, endtime);
+			}
+			 
 		}else{
 			try {throw new IOException("Fel i enter");
 			}catch (IOException e) {e.printStackTrace();}
@@ -44,6 +46,18 @@ public class Customer_enter implements Event{
 	
 	public double getTime(){
 		return starttime;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Enter";
+	}
+
+	@Override
+	public int getCustomerID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

@@ -22,13 +22,19 @@ public class Stop implements Event{
 		//state.setCurrentEvent(this);
 		
 	}
-	public String toString() {
+	public String getName() {
 		return "StopHSS";
+	}
+
+	@Override
+	public double getTime() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 
 	@Override
-	public int getTime() {
+	public int getCustomerID() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

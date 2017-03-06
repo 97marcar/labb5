@@ -6,9 +6,10 @@ import labb5.simulator.Event;
 import labb5.simulator.State;
 
 public class SaloonState extends State{
-	private final int DRESSERS = 5;
-	private final int WAITCHAIRS = 15;
-	private FIFO f;
+	private final int DRESSERS = 2;
+	private final int WAITCHAIRS = 2;
+	private FIFO waitLine;
+	private FIFO cutLine;
 	private int customerCounter = 0;
 	private HaircutReady hr;
 	private int cID = 0;
@@ -21,6 +22,7 @@ public class SaloonState extends State{
 	private UniformRandomStream timeHairCut;
 	private UniformRandomStream timeDissatisfiedReturn;
 	private int numberOfUnsatified;
+	private int numberOfLostCustomers;
 	
 	public SaloonState(){
 		timeNewCustomer = new ExponentialRandomStream (lambda, seed);
@@ -30,11 +32,24 @@ public class SaloonState extends State{
 	}
 	
 	
-	public void addLastLine(Customer c){
-		if(!lineFull()){
-			f.add(c);
+	public boolean addLastLine(Customer c, double time){
+		if(!cutlineFull()){
+			cutLine.add(c);
 			customerCounter++;
+			return(true);
+		}else if(!waitlineFull()){
+			waitLine.add(c);
+			customerCounter++;
+			return(true);
+		}else{
+			if(c.getSatisfaction()){
+				numberOfLostCustomers++;
+			}else{
+				
+			}
+			
 		}
+		return(false);
 		
 	}
 	
@@ -44,8 +59,8 @@ public class SaloonState extends State{
 	
 	public boolean isLineFullOfUnSatisfied(){
 		Customer t;
-		for(int i = 0; i < f.size(); i++){
-			t = (Customer) f.getIndex(i);
+		for(int i = 0; i < waitLine.size(); i++){
+			t = (Customer) waitLine.getIndex(i);
 			if(t.getSatisfaction()){
 				return false;
 			}
@@ -54,12 +69,20 @@ public class SaloonState extends State{
 		return true;
 	}
 	
-	public boolean lineFull(){
-		if(f.size() >= WAITCHAIRS){
+	public boolean waitlineFull(){
+		if(waitLine.size() >= WAITCHAIRS){
 			return true;
 		}
 		return false;
 	}
+	
+	public boolean cutlineFull(){
+		if(cutLine.size() >= DRESSERS){
+			return true;
+		}
+		return false;
+	}
+	
 	public int getTotalCustomer() {
 		return customerCounter;
 	}
@@ -132,5 +155,21 @@ public class SaloonState extends State{
 	public long getSeed(){
 		return seed;
 	}
-		
+	
+	public int getIdle(){
+		return(DRESSERS-cutLine.size());
 	}
+	
+	public int getCutLine(){
+		return(cutLine.size());
+	}
+	
+	public int getWaitLine(){
+		return(waitLine.size());
+	}
+	
+	public int getLostCustomer(){
+		return(numberOfLostCustomers);
+	}
+		
+}

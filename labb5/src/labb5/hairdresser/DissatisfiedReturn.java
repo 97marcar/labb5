@@ -29,4 +29,16 @@ public class DissatisfiedReturn implements Event {
 	public double getTime(){
 		return starttime;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Return";
+	}
+
+	@Override
+	public int getCustomerID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
