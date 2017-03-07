@@ -116,7 +116,7 @@ public class SaloonState extends State{
 	 */
 	public void continueQueue(){
 		if(!cutlineFull()){
-			if(!cutLine.isEmpty()) cutLine.add(waitLine.removeFirst());
+			if(!waitLine.isEmpty()) cutLine.add(waitLine.removeFirst());
 		}else{
 			try {throw new IOException("Fel i continueQueue");
 			}catch (IOException e) {e.printStackTrace();}
@@ -181,13 +181,14 @@ public class SaloonState extends State{
 	 * and add it to the eventqueue.
 	 * It also increase the total Idle time and total Wait time.
 	 */
-	public void createCustomer_enter(){
-		if(openState){
-			double time = timeNewCustomer.next();
+	public void createCustomer_enter(double time){
+		if(openState && cID < 11){
+			double next = timeNewCustomer.next();
 			increaseIdleAndWait(time);
-			Customer_enter event = new Customer_enter(this, createCustomer(), time, time+timeHairCut.next());
+			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, time+timeHairCut.next());
+			//setChangedAndNotify();
 			q.add(event);
-			setChangedAndNotify();
+			
 		}
 		
 	}
@@ -201,8 +202,9 @@ public class SaloonState extends State{
 	public void createHairCutReady(Customer c, double time){
 		increaseIdleAndWait(time);
 		HaircutReady event = new HaircutReady(this, c, seed, time, time+timeDissatisfiedReturn.next(), FAIL_PROCENT);
+		//setChangedAndNotify();
 		q.add(event);
-		setChangedAndNotify();
+		
 	}
 	public int getFails() {
 		return FAIL_PROCENT;
@@ -363,7 +365,7 @@ public class SaloonState extends State{
 		return CLOSINGTIME;
 	}
 	
-	private void setChangedAndNotify(){
+	public void setChangedAndNotify(){
 		setChanged();
 		notifyObservers();
 	}

@@ -53,6 +53,7 @@ public class HaircutReady implements Event {
 	 * and can now leave in peace with a new fresh haircut
 	 */
 	public void triggerEvent() {
+		s.setChangedAndNotify();
 		randomSatisfaction();
 		if(c.getSatisfaction()){
 			s.removeFromQueue(c);

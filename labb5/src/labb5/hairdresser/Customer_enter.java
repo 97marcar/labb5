@@ -32,7 +32,8 @@ public class Customer_enter implements Event{
 	 */
 	public void triggerEvent(){
 		if(c.getSatisfaction()){
-			s.createCustomer_enter();
+			s.setChangedAndNotify();
+			s.createCustomer_enter(starttime);
 			if(s.addLastLine(c)){
 				s.createHairCutReady(c, endtime);
 			}

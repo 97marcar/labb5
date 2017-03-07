@@ -20,7 +20,7 @@ public class Start implements Event{
 	 * Creates a Customer enter
 	 */
 	public void triggerEvent() {
-		state.createCustomer_enter();
+		state.createCustomer_enter(0);
 		
 	}
 	
