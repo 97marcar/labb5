@@ -185,7 +185,7 @@ public class SaloonState extends State{
 		if(openState){
 			double time = timeNewCustomer.next();
 			increaseIdleAndWait(time);
-			Customer_enter event = new Customer_enter(this, createCustomer(), time, timeHairCut.next());
+			Customer_enter event = new Customer_enter(this, createCustomer(), time, time+timeHairCut.next());
 			q.add(event);
 			setChangedAndNotify();
 		}
