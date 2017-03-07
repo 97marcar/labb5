@@ -39,7 +39,7 @@ public class SaloonView extends View{
 	}
 	public void update(Observable o, Object arg) {
 		//Nånting fel med att det är String, Int och Double i samma.
-		System.out.println("%d\t %s\t	%i\t %i\t %d\t %d\t %i\t %i\t %i\t %i\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
+		System.out.printf("%d\t %s\t %i\t %i\t %d\t %d\t %i\t %i\t %i\t %i\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
 				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
 	}
 	
