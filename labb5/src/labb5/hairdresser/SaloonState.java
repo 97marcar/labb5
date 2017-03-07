@@ -12,8 +12,8 @@ import labb5.simulator.State;
 public class SaloonState extends State{
 	private final int DRESSERS = 2;
 	private final int WAITCHAIRS = 2;
-	private FIFO waitLine = new FIFO();
-	private FIFO cutLine = new FIFO();
+	public FIFO waitLine = new FIFO();
+	public FIFO cutLine = new FIFO();
 	private int customerCounter = 0;
 	private int cID = 0;
 	private double hmin=1, hmax=2;
@@ -184,8 +184,8 @@ public class SaloonState extends State{
 	 * It also increase the total Idle time and total Wait time.
 	 */
 	public void createCustomer_enter(double time){
-		if(openState && cID < 11){
-			double next = timeNewCustomer.next();
+		double next = timeNewCustomer.next();
+		if(time+next < CLOSINGTIME){
 			increaseIdleAndWait(time);
 			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, timeHairCut.next());
 			//setChangedAndNotify();
