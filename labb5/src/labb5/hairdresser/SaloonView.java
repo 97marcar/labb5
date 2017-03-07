@@ -25,7 +25,7 @@ public class SaloonView extends View{
 		System.out.println("Lambda (Customer/timeunit entering ...: " + state.getLambda());
 		System.out.println("hmin and hmax (cutting time interval) : " + "[" + state.gethmin() + "," + state.gethmax() + "]");
 		System.out.println("dmin and dmax (return time interval) .: " + "[" + state.getdmin() + "," + state.getdmax() + "]");
-		System.out.println("Risk dissatisfied returns" + state.getFails() + "%");
+		System.out.println("Risk dissatisfied returns ............: " + state.getFails() + "%");
 		System.out.println("Seed used in pseudo random generator .: " + state.getSeed());
 		System.out.println("----------------------------------------------------------------------------");
 		System.out.println("- Time" + "\t" + "Event" +"\t" + " Id" + 
