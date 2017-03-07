@@ -9,7 +9,7 @@ import java.util.*;
 public class FIFO{
 	
 	//creates a queue
-	public List<Object> queue = new ArrayList<Object>();
+	private List<Object> queue = new ArrayList<Object>();
 	
 	//creates a variable that can keep track
 	// of the max size of the queue
