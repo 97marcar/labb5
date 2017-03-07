@@ -11,8 +11,8 @@ import labb5.simulator.State;
 public class SaloonState extends State{
 	private final int DRESSERS = 2;
 	private final int WAITCHAIRS = 2;
-	private FIFO waitLine;
-	private FIFO cutLine;
+	private FIFO waitLine = new FIFO();
+	private FIFO cutLine = new FIFO();
 	private int customerCounter = 0;
 	private int cID = 0;
 	private double hmin=1, hmax=2;
@@ -26,7 +26,6 @@ public class SaloonState extends State{
 	private int numberOfLostCustomers;
 	private EventQueue q;
 	private boolean openState = true;
-	private HaircutReady hr;
 	private double totalIdle = 0;
 	private double totalWait = 0;
 	private final double CLOSINGTIME = 7.00;
@@ -43,7 +42,6 @@ public class SaloonState extends State{
 		timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
 		// Chansen att bli missnöjd hanteras just nu i HairCutReady, bör man flytta vissar delar därifrån?
 		this.q = q;
-
 		Event HairSaloonOpenOrClose = new HairSaloonOpenOrClose(this, CLOSINGTIME);
 		q.add(HairSaloonOpenOrClose);
 		
@@ -118,7 +116,7 @@ public class SaloonState extends State{
 	 */
 	public void continueQueue(){
 		if(!cutlineFull()){
-			cutLine.add(waitLine.removeFirst());
+			if(!cutLine.isEmpty()) cutLine.add(waitLine.removeFirst());
 		}else{
 			try {throw new IOException("Fel i continueQueue");
 			}catch (IOException e) {e.printStackTrace();}
@@ -202,7 +200,7 @@ public class SaloonState extends State{
 	 */
 	public void createHairCutReady(Customer c, double time){
 		increaseIdleAndWait(time);
-		HaircutReady event = new HaircutReady(this, c, seed, time, timeDissatisfiedReturn.next(), FAIL_PROCENT);
+		HaircutReady event = new HaircutReady(this, c, seed, time, time+timeDissatisfiedReturn.next(), FAIL_PROCENT);
 		q.add(event);
 		setChangedAndNotify();
 	}
@@ -218,7 +216,7 @@ public class SaloonState extends State{
 	 */
 	public void createDissatisfiedReturn(Customer c, double time ){
 		increaseIdleAndWait(time);
-		DissatisfiedReturn event = new DissatisfiedReturn(c, time, timeHairCut.next());
+		DissatisfiedReturn event = new DissatisfiedReturn(c, time, time+timeHairCut.next());
 		q.add(event);
 		setChangedAndNotify();
 	}
