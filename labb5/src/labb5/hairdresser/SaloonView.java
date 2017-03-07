@@ -1,6 +1,7 @@
 package labb5.hairdresser;
 import labb5.hairdresser.SaloonState;
 import labb5.simulator.EventQueue;
+
 import java.util.Observable;
 
 import labb5.simulator.View;
@@ -10,7 +11,7 @@ public class SaloonView extends View{
 	
 	private SaloonState state;
 	private EventQueue q;
-	
+
 	public SaloonView(SaloonState state, EventQueue q) {
 		this.state = state;
 		this.q = q;
@@ -39,10 +40,9 @@ public class SaloonView extends View{
 		
 	}
 	public void update(Observable o, Object arg) {
-		//Nånting fel med att det är String, Int och Double i samma.
-		System.out.println("körs du?");
-		System.out.printf("%f\t %s\t %d\t %d\t %f\t %f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
+		System.out.printf("  %.2f  %s %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
 				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
+		System.out.println();
 	}
 	
 	
