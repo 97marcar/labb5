@@ -55,7 +55,7 @@ public class HaircutReady implements Event {
 	 * @return name of this event	
 	 *  */
 	public String getName() {
-		return "Ready";
+		return "Done";
 	}
 
 	/**

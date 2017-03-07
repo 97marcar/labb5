@@ -20,6 +20,7 @@ public class HairSaloonOpenOrClose implements Event{
 	 */
 	public void triggerEvent() {
 		s.changeOpenState();
+		s.setChangedAndNotify();
 		
 	}
 

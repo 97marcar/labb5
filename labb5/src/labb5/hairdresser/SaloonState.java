@@ -227,6 +227,9 @@ public class SaloonState extends State{
 	public int getFails() {
 		return FAIL_PROCENT;
 	}
+	public int getMaxSize() {
+		return waitLine.maxSize();
+	}
 	
 	/**
 	 * Creates a DissatisfiedReturn event and adds it to the eventqueue.

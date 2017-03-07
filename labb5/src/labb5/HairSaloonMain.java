@@ -16,6 +16,7 @@ public class HairSaloonMain {
 		SaloonView view = new SaloonView(state, queue);
 		
 		sim.start();
+		view.saloonEndLayout();
 	}
 
 }

@@ -7,10 +7,11 @@ import java.util.Observable;
 import labb5.simulator.View;
 
 public class SaloonView extends View{
-	private HaircutReady hr;
 	
 	private SaloonState state;
+	private FIFO f;
 	private EventQueue q;
+	int wait[];
 
 	public SaloonView(SaloonState state, EventQueue q) {
 		this.state = state;
@@ -28,20 +29,31 @@ public class SaloonView extends View{
 		System.out.println("dmin and dmax (return time interval) .: " + "[" + state.getdmin() + "," + state.getdmax() + "]");
 		System.out.println("Risk dissatisfied returns ............: " + state.getFails() + "%");
 		System.out.println("Seed used in pseudo random generator .: " + state.getSeed());
-		System.out.println("----------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("- Time" + "\t" + "Event" +"\t" + " Id" + 
 		"\t" + "Idle" +"\t" + " TIdle" + "\t" + "TWait" +"\t" +
 				"InQ" + "\t" + "Cut" +"\t" + " Lost" + "\t" + "Ret " +"-" );	
 	}
 
 	public void saloonEndLayout() {
-		System.out.println("Number of customers" + state.getTotalCustomer());
-		System.out.println("Number of unsatisfied customers" + state.getUnsatisfied());
+		System.out.println("-----------------------------------------------------------------------------");
+		System.out.println("Number of customers cut .......: " + state.getTotalCustomer());
+		//getTotalwait måste bytas ut mot något annat.
+		System.out.println("Average cutting time ..........: %.2f"); // , (state.getTotalCustomer() - state.getLostCustomer()) / state.getTotalWait());
+//		System.out.println();
+		System.out.println("Average queuing time ..........: %.2f"); // , (state.getTotalWait() / (state.getTotalCustomer() - state.getLostCustomer())));
+//		System.out.println();
+		System.out.println("Largest queue (max NumWaiting) : " + state.getMaxSize());
+		System.out.println("Customers not cut(NumLost) ....: " + state.getLostCustomer());
+		System.out.println("Dissatisfied customers ........: " + state.getUnsatisfied());
+		System.out.println("Time chairs were idle .........: %.2f ");// , state.getIdle());
+		
 		
 	}
 	public void update(Observable o, Object arg) {
 	System.out.printf("  %.2f  %s %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
 				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
+	System.out.println();
 		System.out.println();
 	}
 	
