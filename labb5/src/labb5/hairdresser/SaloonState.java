@@ -1,6 +1,7 @@
 package labb5.hairdresser;
 
 import java.io.IOException;
+import java.util.Random;
 
 import labb5.random.ExponentialRandomStream;
 import labb5.random.UniformRandomStream;
@@ -29,7 +30,8 @@ public class SaloonState extends State{
 	private double totalIdle = 0;
 	private double totalWait = 0;
 	private final double CLOSINGTIME = 7.00;
-	private int FAIL_PROCENT = 20;
+	private int FAIL_PROCENT = 50;
+	private Random randomNum = new Random(seed);
 	
 	/**
 	 * Creates objects from the random package. These are used for time.
@@ -185,14 +187,29 @@ public class SaloonState extends State{
 		if(openState && cID < 11){
 			double next = timeNewCustomer.next();
 			increaseIdleAndWait(time);
-			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, time+timeHairCut.next());
+			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, timeHairCut.next());
 			//setChangedAndNotify();
 			q.add(event);
 			
 		}
 		
 	}
-	
+	private void randomSatisfaction(Customer c, double time) {
+		if(c.getSatisfaction() == true) {
+			if((randomNum.nextInt(100) + 1) <= FAIL_PROCENT) {
+			c.changeSatisfaction();
+			//System.out.println(c.getId());
+			//System.out.println(endtime);
+			this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
+			}
+		}else if(c.getSatisfaction() == false) {
+			if((randomNum.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
+				c.changeSatisfaction();
+			}else{
+				this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
+			}
+		}
+	}
 	/**
 	 * Creates a new haircutready object and adds it to the eventqueue
 	 * It also increase the total Idle time and total Wait time.
@@ -201,7 +218,8 @@ public class SaloonState extends State{
 	 */
 	public void createHairCutReady(Customer c, double time){
 		increaseIdleAndWait(time);
-		HaircutReady event = new HaircutReady(this, c, seed, time, time+timeDissatisfiedReturn.next(), FAIL_PROCENT);
+		randomSatisfaction(c, time);
+		HaircutReady event = new HaircutReady(this, c, time);
 		//setChangedAndNotify();
 		q.add(event);
 		
@@ -218,9 +236,9 @@ public class SaloonState extends State{
 	 */
 	public void createDissatisfiedReturn(Customer c, double time ){
 		increaseIdleAndWait(time);
-		DissatisfiedReturn event = new DissatisfiedReturn(c, time, time+timeHairCut.next());
+		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time, timeHairCut.next());
 		q.add(event);
-		setChangedAndNotify();
+		//setChangedAndNotify();
 	}
 	
 	/**

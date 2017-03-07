@@ -10,7 +10,7 @@ public class HairSaloonMain {
 		SaloonState state = new SaloonState(queue);
 		Start start = new Start(state);
 		queue.add(start);
-		Stop stopp = new Stop(state, 999999);
+		Stop stopp = new Stop(state, 999);
 		queue.add(stopp);
 		Simulator sim = new Simulator(queue);
 		SaloonView view = new SaloonView(state, queue);

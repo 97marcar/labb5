@@ -5,12 +5,11 @@ import java.util.Random;
 import labb5.simulator.Event;
 
 public class HaircutReady implements Event {
-	private Random randy;
+	private int randomNum;
 	private Customer c;
 	private SaloonState s;
 	private double starttime;
 	private double endtime;
-	public final int FAIL_PROCENT; //Change of failiure
 	
 	/**
 	 * 
@@ -20,28 +19,15 @@ public class HaircutReady implements Event {
 	 * @param starttime start time
 	 * @param endtime end time
 	 */
-	public HaircutReady(SaloonState s, Customer c,long seed, 
-			double starttime, double endtime, int FAIL_PROCENT){
-		this.FAIL_PROCENT = FAIL_PROCENT;
+	public HaircutReady(SaloonState s, Customer c,double starttime){
 		this.c = c;
-		this.randy = new Random(seed);
 		this.s = s;
 		this.starttime = starttime;
 		this.endtime = starttime+endtime;
+		
 	}
 
-	private void randomSatisfaction() {
-		if(c.getSatisfaction() == true) {
-			if((randy.nextInt(100) + 1) <= FAIL_PROCENT) {
-			c.changeSatisfaction();
-			s.createDissatisfiedReturn(c, endtime);
-			}
-		}else if(c.getSatisfaction() == false) {
-			if((randy.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
-				c.changeSatisfaction();
-			}
-		}
-	}
+	
 	
 	/**
 	 * @return chance(percent) of customer getting unsatisfied
@@ -54,12 +40,8 @@ public class HaircutReady implements Event {
 	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
-		randomSatisfaction();
-		if(c.getSatisfaction()){
-			s.removeFromQueue(c);
-			s.continueQueue();
-		}
-		
+		s.removeFromQueue(c);
+		s.continueQueue();		
 	}
 
 	/**
