@@ -1,6 +1,8 @@
 package labb5.simulator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -23,16 +25,14 @@ public class EventQueue {
 	 * Help method to sort the list rising depending on time. 
 	 */
 	private void sort() {
-		int n = eventQ.size();
-		for (int j = 1; j < n; j++) {
-			Event k = eventQ.get(j);
-			int i = j - 1;
-			while (i >= 0 && eventQ.get(j).getTime()>k.getTime()) {
-				eventQ.add(i+1, eventQ.get(i));
-				i--;
-			}
-			eventQ.add(i+1,k);
-		}
+		Collections.sort(eventQ, new Comparator<Event>(){
+			@Override
+			public int compare(Event e1, Event e2)
+	        {
+
+	            return  Double.compare(e1.getTime(), e2.getTime());
+	        }
+		});
 	}
 	
 	/**
