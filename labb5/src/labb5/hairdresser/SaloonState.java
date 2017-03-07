@@ -26,9 +26,11 @@ public class SaloonState extends State{
 	private int numberOfLostCustomers;
 	private EventQueue q;
 	private boolean openState = true;
+	private HaircutReady hr;
 	private double totalIdle = 0;
 	private double totalWait = 0;
 	private final double CLOSINGTIME = 7.00;
+	private int FAIL_PROCENT = 20;
 	
 	/**
 	 * Creates objects from the random package. These are used for time.
@@ -200,9 +202,12 @@ public class SaloonState extends State{
 	 */
 	public void createHairCutReady(Customer c, double time){
 		increaseIdleAndWait(time);
-		HaircutReady event = new HaircutReady(this, c, seed, time, timeDissatisfiedReturn.next());
+		HaircutReady event = new HaircutReady(this, c, seed, time, timeDissatisfiedReturn.next(), FAIL_PROCENT);
 		q.add(event);
 		setChangedAndNotify();
+	}
+	public int getFails() {
+		return FAIL_PROCENT;
 	}
 	
 	/**

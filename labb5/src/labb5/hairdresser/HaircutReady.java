@@ -10,7 +10,7 @@ public class HaircutReady implements Event {
 	private SaloonState s;
 	private double starttime;
 	private double endtime;
-	private final int FAIL_PROCENT = 20; //Change of failiure
+	public final int FAIL_PROCENT; //Change of failiure
 	
 	/**
 	 * 
@@ -21,7 +21,8 @@ public class HaircutReady implements Event {
 	 * @param endtime end time
 	 */
 	public HaircutReady(SaloonState s, Customer c,long seed, 
-			double starttime, double endtime){
+			double starttime, double endtime, int FAIL_PROCENT){
+		this.FAIL_PROCENT = FAIL_PROCENT;
 		this.c = c;
 		this.randy = new Random(seed);
 		this.s = s;
@@ -45,10 +46,6 @@ public class HaircutReady implements Event {
 	/**
 	 * @return chance(percent) of customer getting unsatisfied
 	 */
-	public int getFailProcent() {
-		return FAIL_PROCENT;
-		
-	}
 
 	/**
 	 * Changes the satisfaction of the customer randomly 

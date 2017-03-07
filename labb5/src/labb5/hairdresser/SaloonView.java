@@ -25,7 +25,7 @@ public class SaloonView extends View{
 		System.out.println("Lambda (Customer/timeunit entering ...: " + state.getLambda());
 		System.out.println("hmin and hmax (cutting time interval) : " + "[" + state.gethmin() + "," + state.gethmax() + "]");
 		System.out.println("dmin and dmax (return time interval) .: " + "[" + state.getdmin() + "," + state.getdmax() + "]");
-//		System.out.println("Risk dissatisfied returns" + hr.getFailProcent() + "%");
+		System.out.println("Risk dissatisfied returns" + state.getFails() + "%");
 		System.out.println("Seed used in pseudo random generator .: " + state.getSeed());
 		System.out.println("----------------------------------------------------------------------------");
 		System.out.println("- Time" + "\t" + "Event" +"\t" + " Id" + 
@@ -40,6 +40,7 @@ public class SaloonView extends View{
 	}
 	public void update(Observable o, Object arg) {
 		//Nånting fel med att det är String, Int och Double i samma.
+		System.out.println("körs du?");
 		System.out.printf("%d\t %s\t %i\t %i\t %d\t %d\t %i\t %i\t %i\t %i\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
 				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
 	}
