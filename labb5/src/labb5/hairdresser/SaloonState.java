@@ -202,7 +202,6 @@ public class SaloonState extends State{
 	private void increaseIdleAndWait(double time){
 		totalIdle += time * getIdle(); 
 		totalWait += time * waitLine.size();
-		
 	}
 	
 	/**
@@ -213,7 +212,6 @@ public class SaloonState extends State{
 	public void createCustomer_enter(double time){
 		double next = timeNewCustomer.next();
 		if(time+next < CLOSINGTIME){
-			increaseIdleAndWait(time);
 			Customer_enter event = new Customer_enter(this, createCustomer(), time+next);
 			//setChangedAndNotify();
 			q.add(event);
@@ -252,7 +250,6 @@ public class SaloonState extends State{
 	 * @param time start time of the event
 	 */
 	public void createHairCutReady(Customer c, double time){
-		increaseIdleAndWait(time);
 		HaircutReady event = new HaircutReady(this, c, time);
 		//setChangedAndNotify();
 		q.add(event);
@@ -272,7 +269,6 @@ public class SaloonState extends State{
 	 * @param time start time of the event
 	 */
 	public void createDissatisfiedReturn(Customer c, double time ){
-		increaseIdleAndWait(time);
 		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time);
 		q.add(event);
 		//setChangedAndNotify();
