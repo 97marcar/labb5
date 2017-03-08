@@ -17,11 +17,10 @@ public class Customer_enter implements Event{
 	 * @param c Customer
 	 * @param time the time of which this is supposed to happen
 	 */
-	public Customer_enter(SaloonState s, Customer c, double starttime, double endtime){
+	public Customer_enter(SaloonState s, Customer c, double starttime){
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
-		this.endtime = starttime+endtime;
 		//kvar att skapa endtime
 	}
 	
@@ -35,7 +34,7 @@ public class Customer_enter implements Event{
 			s.setChangedAndNotify();
 			s.createCustomer_enter(starttime);
 			if(s.addLastLine(c)){
-				s.createHairCutReady(c, endtime);
+				s.createHairCutReady(c, starttime+s.getNextHair());
 			}
 			 
 		}else{

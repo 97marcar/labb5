@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 
 public class EventQueue {
-	
+	private double currentTime;
 	private List<Event> eventQ = new ArrayList<Event>();
 	
 	/**
@@ -19,6 +19,8 @@ public class EventQueue {
 	public void add(Event event){
 		eventQ.add(event);
 		sort();
+	
+		
 	}
 	
 	/**
@@ -72,8 +74,17 @@ public class EventQueue {
 		}
 		else {
 			return(eventQ.get(0));
-	}
+		}
 		
+	}
+	
+	public void updateCurrentTime(){
+		currentTime = getFirst().getTime();
+		
+	}
+	
+	public double currentTime(){
+		return currentTime;
 	}
 
 }

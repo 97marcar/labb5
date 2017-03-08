@@ -51,7 +51,7 @@ public class SaloonView extends View{
 		
 	}
 	public void update(Observable o, Object arg) {
-	System.out.printf("  %.2f  %s %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
+	System.out.printf("  %.2f  %s\t %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
 				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
 	Customer t;
 	for(int i = 0; i < state.waitLine.size(); i++) {

@@ -15,6 +15,7 @@ public class Simulator {
 	public void start(){
 
 		while(!eventQ.isEmpty()){
+			eventQ.updateCurrentTime();
 			eventQ.getFirst().triggerEvent();
 			eventQ.removeFirst();
 		}

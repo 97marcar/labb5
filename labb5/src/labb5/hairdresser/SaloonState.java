@@ -63,8 +63,8 @@ public class SaloonState extends State{
 			if(c.getSatisfaction()) customerCounter++;
 			return(true);
 		}else if(!waitlineFull()){
-			waitLine.add(c);
 			if(c.getSatisfaction()){
+				waitLine.add(c);
 				customerCounter++;
 			}else{
 				addUnsatisfiedFirst(c);
@@ -118,7 +118,15 @@ public class SaloonState extends State{
 	 */
 	public void continueQueue(){
 		if(!cutlineFull()){
-			if(!waitLine.isEmpty()) cutLine.add(waitLine.removeFirst());
+			
+			if(!waitLine.isEmpty()){
+				Customer c = (Customer) waitLine.removeFirst();
+				cutLine.add(c);
+				System.out.println(q.currentTime());
+				createHairCutReady(c, q.currentTime()+timeHairCut.next());
+			}
+			
+		
 		}else{
 			try {throw new IOException("Fel i continueQueue");
 			}catch (IOException e) {e.printStackTrace();}
@@ -187,7 +195,7 @@ public class SaloonState extends State{
 		double next = timeNewCustomer.next();
 		if(time+next < CLOSINGTIME){
 			increaseIdleAndWait(time);
-			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, timeHairCut.next());
+			Customer_enter event = new Customer_enter(this, createCustomer(), time+next);
 			//setChangedAndNotify();
 			q.add(event);
 			
@@ -384,6 +392,10 @@ public class SaloonState extends State{
 	 */
 	public double getClosingTime(){
 		return CLOSINGTIME;
+	}
+	
+	public double getNextHair(){
+		return timeHairCut.next();
 	}
 	
 	public void setChangedAndNotify(){
