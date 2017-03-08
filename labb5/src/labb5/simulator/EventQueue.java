@@ -6,9 +6,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Class that contains all events internally in an arraylist.
+ * This class handles all of the events of this simulation with its methods.
+ * 
+ * @author Marcus Carlsson
+ * @author Henrik Möller
+ * @author Oscar Ferm
+ * @since 2017-03-08
+ *
+ */
 
 public class EventQueue {
-	private double currentTime;
 	private List<Event> eventQ = new ArrayList<Event>();
 	
 	/**
@@ -76,15 +85,6 @@ public class EventQueue {
 			return(eventQ.get(0));
 		}
 		
-	}
-	
-	public void updateCurrentTime(){
-		currentTime = getFirst().getTime();
-		
-	}
-	
-	public double currentTime(){
-		return currentTime;
 	}
 
 }
