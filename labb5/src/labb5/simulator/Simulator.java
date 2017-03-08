@@ -31,6 +31,7 @@ public class Simulator {
 
 		while(!eventQ.isEmpty()){
 			eventQ.getFirst().triggerEvent();
+			eventQ.updateCurrentTime();
 			eventQ.removeFirst();
 		}
 	}

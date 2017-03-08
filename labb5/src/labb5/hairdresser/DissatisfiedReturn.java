@@ -38,8 +38,12 @@ public class DissatisfiedReturn implements Event {
 	 * a new event of the same kind but with a new start time.
 	 */
 	public void triggerEvent() {
+		s.increaseIdleAndWait(starttime-s.getCurrentTime());
 		s.setChangedAndNotify();
-		s.increaseIdleAndWait(diff);
+		//System.out.println(s.getCurrentTime());
+		//System.out.println(starttime-s.getCurrentTime());
+		
+		
 		
 		if(s.addLastLine(c, starttime)){
 			double nexttime = s.getNextHair();

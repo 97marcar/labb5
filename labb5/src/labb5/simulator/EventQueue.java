@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 
 public class EventQueue {
 	private List<Event> eventQ = new ArrayList<Event>();
+	private double currentTime;
 	
 	/**
 	 * Add event to event queue and sort the queue rising 
@@ -85,6 +86,15 @@ public class EventQueue {
 			return(eventQ.get(0));
 		}
 		
+	}
+	
+	public void updateCurrentTime(){
+		currentTime = getFirst().getTime();
+		
+	}
+	
+	public double currentTime(){
+		return currentTime;
 	}
 
 }

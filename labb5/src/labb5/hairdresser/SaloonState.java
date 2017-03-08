@@ -235,7 +235,6 @@ public class SaloonState extends State {
 
 	public void increaseIdleAndWait(double time) {
 		totalIdle += time * getIdle();
-
 		totalWait += time * waitLine.size();
 	}
 
@@ -274,7 +273,6 @@ public class SaloonState extends State {
 			if (r >= FAIL_PROCENT) {
 				c.changeSatisfaction();
 			} else {
-				numberOfUnsatified++;
 				double nexttime = timeDissatisfiedReturn.next();
 				this.createDissatisfiedReturn(c, time+nexttime, nexttime);
 
@@ -491,4 +489,7 @@ public class SaloonState extends State {
 		notifyObservers();
 	}
 
+	public double getCurrentTime(){
+		return q.currentTime();
+	}
 }
