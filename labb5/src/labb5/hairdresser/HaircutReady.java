@@ -36,7 +36,9 @@ public class HaircutReady implements Event {
 		this.time = time;
 		this.diff = diff;
 	}
-
+	/**
+	 * Which events that are used.
+	 */
 	public void triggerEvent() {
 		s.increaseIdleAndWait(diff);
 		s.setChangedAndNotify();

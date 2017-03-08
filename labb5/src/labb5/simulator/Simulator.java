@@ -1,42 +1,38 @@
 package labb5.simulator;
 
-import java.util.Random;
-
-import labb5.hairdresser.Customer;
+/**
+ * Headclass that runs the events from the eventqueue.
+ * Takes the first element in the eventqueue and run its triggerEvent.
+ * Removes the element from eventqueue after it has been used.
+ * 
+ * @author Marcus Carlsson
+ * @author Henrik Möller
+ * @author Oscar Ferm
+ * @since 2017-03-08
+ *
+ */
 
 public class Simulator {
 	
 	private EventQueue eventQ;
 	
+	/**
+	 * @param eventQ 
+	 * 
+	 */
+	
 	public Simulator(EventQueue eventQ){
 		this.eventQ = eventQ;
 	}
-	
+	/**
+	 * Runs and updates the simulation.
+	 */
 	public void start(){
 
 		while(!eventQ.isEmpty()){
-			eventQ.updateCurrentTime();
 			eventQ.getFirst().triggerEvent();
 			eventQ.removeFirst();
 		}
 	}
 
 }
-
-
-// Bör lyftas in i ett event. 
-/** Random randy = new Random();
-Customer casty;
-
-public void setSatisfaction() {
-	if(casty.getSatisfaction() == true) {
-		if((randy.nextInt(100) + 1) <= 20) {
-		casty.changeSatisfaction();
-		}
-	}else if(casty.getSatisfaction() == false) {
-		if((randy.nextInt(100) + 1) <= 80) {
-			casty.changeSatisfaction();
-		}
-	}
-}
-*/

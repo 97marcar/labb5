@@ -53,7 +53,7 @@ public class SaloonView extends View{
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("- Time" + "\t" + "Event" +"\t" + " Id" + 
 		"\t" + "Idle" +"\t" + " TIdle" + "\t" + "TWait" +"\t" +
-				"InQ" + "\t" + "Cut" +"\t" + " Lost" + "\t" + "Ret " +"-" );	
+				"InQ" + "\t" + "Cut" +"\t" + " Lost" + "\t" + "Ret " +"-" );
 	}
 	/**
 	 * Statistics of the simulation.
