@@ -2,10 +2,21 @@ package labb5.hairdresser;
 
 import java.util.Random;
 
+
 import labb5.simulator.Event;
 
+/**
+ * 
+ * 
+ * 
+ * @author Marcus Carlsson
+ * @author Henrik Möller
+ * @author Oscar Ferm
+ * @since 2017-03-08
+ *
+ */
+
 public class HaircutReady implements Event {
-	private int randomNum;
 	private Customer c;
 	private SaloonState s;
 	private double time;
@@ -14,9 +25,7 @@ public class HaircutReady implements Event {
 	 * 
 	 * @param s SaloonState
 	 * @param c Customer
-	 * @param seed randomseed
 	 * @param starttime start time
-	 * @param endtime end time
 	 */
 	public HaircutReady(SaloonState s, Customer c,double time){
 		this.c = c;
@@ -25,20 +34,8 @@ public class HaircutReady implements Event {
 		
 	}
 
-	
-	
-	/**
-	 * @return chance(percent) of customer getting unsatisfied
-	 */
-
-	/**
-	 * Changes the satisfaction of the customer randomly 
-	 * If the customer is satisfied it is removed from the queue
-	 * and can now leave in peace with a new fresh haircut
-	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
-		
 		s.removeFromQueue(c);
 		s.randomSatisfaction(c, time);
 		s.continueQueue(time);		

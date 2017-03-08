@@ -1,9 +1,21 @@
 package labb5.hairdresser;
 
-import java.awt.EventQueue;
 
 import labb5.hairdresser.SaloonState;
 import labb5.simulator.Event;
+
+/**
+ * Start class. It starts the first event
+ * CustomerEnter with time 0.
+ * 
+ * 
+ * 
+ * @author Marcus Carlsson
+ * @author Henrik Möller
+ * @author Oscar Ferm
+ * @since 2017-03-08
+ *
+ */
 
 public class Start implements Event{
 	SaloonState state;
