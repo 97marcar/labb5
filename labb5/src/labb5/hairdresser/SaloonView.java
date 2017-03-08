@@ -69,7 +69,7 @@ public class SaloonView extends View{
 		System.out.println("Largest queue (max NumWaiting) : " + state.getMaxSize());
 		System.out.println("Customers not cut(NumLost) ....: " + state.getLostCustomer());
 		System.out.println("Dissatisfied customers ........: " + state.getUnsatisfied());
-		System.out.printf("Time chairs were idle .........: %.2f " , state.getTotalIdle() /state.getTotalWait());
+		System.out.printf("Time chairs were idle .........: %.2f " , state.getTotalIdle());
 		System.out.println();
 		
 		
