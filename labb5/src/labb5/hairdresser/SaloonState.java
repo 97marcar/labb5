@@ -95,7 +95,8 @@ public class SaloonState extends State{
 				numberOfLostCustomers++;
 			}else{
 				if(isLineFullOfUnSatisfied()){
-					createDissatisfiedReturn(c, time+getNextUnsatisfied());
+					double next = getNextUnsatisfied();
+					createDissatisfiedReturn(c, time+next, next);
 				}
 				
 			}
@@ -144,7 +145,8 @@ public class SaloonState extends State{
 			if(!waitLine.isEmpty()){
 				Customer c = (Customer) waitLine.removeFirst();
 				cutLine.add(c);
-				createHairCutReady(c, time+getNextHair());
+				double t = getNextHair();
+				createHairCutReady(c, time+t, t);
 			}
 		}else{
 			try {throw new IOException("Fel i continueQueue");
@@ -199,7 +201,7 @@ public class SaloonState extends State{
 		return c;
 	}
 	
-	private void increaseIdleAndWait(double time){
+	public void increaseIdleAndWait(double time){
 		totalIdle += time * getIdle(); 
 		totalWait += time * waitLine.size();
 	}
@@ -212,7 +214,7 @@ public class SaloonState extends State{
 	public void createCustomer_enter(double time){
 		double next = timeNewCustomer.next();
 		if(time+next < CLOSINGTIME){
-			Customer_enter event = new Customer_enter(this, createCustomer(), time+next);
+			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, next);
 			//setChangedAndNotify();
 			q.add(event);
 			
@@ -232,14 +234,16 @@ public class SaloonState extends State{
 			if(r <= FAIL_PROCENT) {
 			numberOfUnsatified++;
 			c.changeSatisfaction();
-			this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
+			double nexttime = timeDissatisfiedReturn.next();
+			this.createDissatisfiedReturn(c, time+nexttime, nexttime);
 			}
 		}else {
 			if(r >= FAIL_PROCENT) {
 				c.changeSatisfaction();
 			}else{
 				numberOfUnsatified++;
-				this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
+				double nexttime = timeDissatisfiedReturn.next();
+				this.createDissatisfiedReturn(c, time+nexttime, nexttime);
 			}
 		}
 	}
@@ -249,8 +253,8 @@ public class SaloonState extends State{
 	 * @param c customer
 	 * @param time start time of the event
 	 */
-	public void createHairCutReady(Customer c, double time){
-		HaircutReady event = new HaircutReady(this, c, time);
+	public void createHairCutReady(Customer c, double time, double diff){
+		HaircutReady event = new HaircutReady(this, c, time, diff);
 		//setChangedAndNotify();
 		q.add(event);
 		
@@ -268,8 +272,8 @@ public class SaloonState extends State{
 	 * @param c customer 
 	 * @param time start time of the event
 	 */
-	public void createDissatisfiedReturn(Customer c, double time ){
-		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time);
+	public void createDissatisfiedReturn(Customer c, double time, double diff){
+		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time, diff);
 		q.add(event);
 		//setChangedAndNotify();
 	}

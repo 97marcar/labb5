@@ -17,6 +17,7 @@ public class DissatisfiedReturn implements Event {
 	private SaloonState s;
 	private Customer c;
 	private double starttime;
+	private double diff;
 	
 	/**
 	 * 
@@ -24,10 +25,11 @@ public class DissatisfiedReturn implements Event {
 	 * @param starttime start time
 	 * @param endtime end to,e
 	 */
-	public DissatisfiedReturn(SaloonState s, Customer c, double starttime){
+	public DissatisfiedReturn(SaloonState s, Customer c, double starttime, double diff){
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
+		this.diff = diff;
 	}
 	
 	/**
@@ -37,9 +39,11 @@ public class DissatisfiedReturn implements Event {
 	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
+		s.increaseIdleAndWait(diff);
 		
 		if(s.addLastLine(c, starttime)){
-			s.createHairCutReady(c, starttime+s.getNextHair());
+			double nexttime = s.getNextHair();
+			s.createHairCutReady(c, starttime+nexttime, nexttime);
 		}
 	}
 	

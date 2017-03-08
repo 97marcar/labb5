@@ -19,6 +19,7 @@ public class HaircutReady implements Event {
 	private Customer c;
 	private SaloonState s;
 	private double time;
+	private double diff;
 
 	/**
 	 * 
@@ -29,14 +30,15 @@ public class HaircutReady implements Event {
 	 * @param starttime
 	 *            start time
 	 */
-	public HaircutReady(SaloonState s, Customer c, double time) {
+	public HaircutReady(SaloonState s, Customer c, double time, double diff) {
 		this.c = c;
 		this.s = s;
 		this.time = time;
-
+		this.diff = diff;
 	}
 
 	public void triggerEvent() {
+		s.increaseIdleAndWait(diff);
 		s.setChangedAndNotify();
 		s.removeFromQueue(c);
 		s.randomSatisfaction(c, time);
