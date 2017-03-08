@@ -2,12 +2,12 @@ package labb5.hairdresser;
 
 
 
-
-
 import labb5.simulator.Event;
 
 /**
- * Stopclass, ends the simulation.
+ * Stop class. Terminates the simulation.
+ * 
+ * 
  * 
  * @author Marcus Carlsson
  * @author Henrik Möller

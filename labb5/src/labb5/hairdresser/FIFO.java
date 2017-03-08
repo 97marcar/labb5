@@ -100,6 +100,10 @@ public class FIFO{
 	public int maxSize(){
 		return(maxsize);
 	}
+	/**
+	 * 
+	 * @param item returns item at first position of the queue.
+	 */
 	public void addFirst(Object item) {
 		queue.add(0, item);
 	}
@@ -181,7 +185,11 @@ public class FIFO{
 		}
 			
 	}
-	
+	/**
+	 * 
+	 * @param i
+	 * @return specific index (element) of the queue. 
+	 */
 	public Object getIndex(int i){
 		return(queue.get(i));
 	}

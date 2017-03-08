@@ -35,7 +35,9 @@ public class HaircutReady implements Event {
 		this.time = time;
 
 	}
-
+	/**
+	 * Which events that are used.
+	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
 		s.removeFromQueue(c);
