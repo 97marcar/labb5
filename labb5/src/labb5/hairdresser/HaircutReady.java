@@ -8,8 +8,7 @@ public class HaircutReady implements Event {
 	private int randomNum;
 	private Customer c;
 	private SaloonState s;
-	private double starttime;
-	private double endtime;
+	private double time;
 	
 	/**
 	 * 
@@ -19,11 +18,10 @@ public class HaircutReady implements Event {
 	 * @param starttime start time
 	 * @param endtime end time
 	 */
-	public HaircutReady(SaloonState s, Customer c,double starttime){
+	public HaircutReady(SaloonState s, Customer c,double time){
 		this.c = c;
 		this.s = s;
-		this.starttime = starttime;
-		this.endtime = starttime+endtime;
+		this.time = time;
 		
 	}
 
@@ -40,15 +38,17 @@ public class HaircutReady implements Event {
 	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
+		
 		s.removeFromQueue(c);
-		s.continueQueue();		
+		s.randomSatisfaction(c, time);
+		s.continueQueue(time);		
 	}
 
 	/**
 	 * @return start time of this event
 	 */
 	public double getTime() {
-		return starttime;
+		return time;
 	}
 
 	/**

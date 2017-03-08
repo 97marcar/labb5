@@ -14,11 +14,10 @@ public class DissatisfiedReturn implements Event {
 	 * @param starttime start time
 	 * @param endtime end to,e
 	 */
-	public DissatisfiedReturn(SaloonState s, Customer c, double starttime, double endtime){
+	public DissatisfiedReturn(SaloonState s, Customer c, double starttime){
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
-		this.endtime = starttime+endtime;
 	}
 	
 	/**
@@ -28,10 +27,12 @@ public class DissatisfiedReturn implements Event {
 	 */
 	public void triggerEvent() {
 		s.setChangedAndNotify();
-		if(!s.isLineFullOfUnSatisfied()){
-			s.addLastLine(c);
-			s.createHairCutReady(c, endtime); 
+		
+		if(s.addLastLine(c)){
+			s.createHairCutReady(c, starttime+s.getNextHair());
 		}
+		
+//			s.createDissatisfiedReturn(c, starttime+s.getNextUnsatisfied());
 		
 	}
 	

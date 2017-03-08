@@ -58,6 +58,8 @@ public class SaloonState extends State{
 	 * @return true if it successfully added a customer to the line else false
 	 */
 	public boolean addLastLine(Customer c){
+
+
 		if(!cutlineFull()){
 			cutLine.add(c);
 			if(c.getSatisfaction()) customerCounter++;
@@ -67,15 +69,22 @@ public class SaloonState extends State{
 				waitLine.add(c);
 				customerCounter++;
 			}else{
-				addUnsatisfiedFirst(c);
+				if(waitLine.isEmpty()){
+					waitLine.add(c);
+				}else{
+					addUnsatisfiedFirst(c);
+				}
+				
 			}
-			return(true);
 		}else{
 			
 			if(c.getSatisfaction()){
 				numberOfLostCustomers++;
 			}else{
-				addUnsatisfiedFirst(c);
+				if(isLineFullOfUnSatisfied()){
+					addUnsatisfiedFirst(c);
+				}
+				
 			}
 		}
 		return(false);
@@ -117,17 +126,13 @@ public class SaloonState extends State{
 	/**
 	 * Removes thefirst 
 	 */
-	public void continueQueue(){
+	public void continueQueue(double time){
 		if(!cutlineFull()){
-			
 			if(!waitLine.isEmpty()){
 				Customer c = (Customer) waitLine.removeFirst();
 				cutLine.add(c);
-				System.out.println(q.currentTime());
-				createHairCutReady(c, q.currentTime()+timeHairCut.next());
+				createHairCutReady(c, time+getNextHair());
 			}
-			
-		
 		}else{
 			try {throw new IOException("Fel i continueQueue");
 			}catch (IOException e) {e.printStackTrace();}
@@ -210,17 +215,19 @@ public class SaloonState extends State{
 	 * counter++ every time a customers get dissatisfied,
 	 * works if previously dissatisfied.
 	 */
-	private void randomSatisfaction(Customer c, double time) {
+	public void randomSatisfaction(Customer c, double time) {
+		int r = (randomNum.nextInt(100) + 1);
+		System.out.println(r);
 		if(c.getSatisfaction() == true) {
-			if((randomNum.nextInt(100) + 1) <= FAIL_PROCENT) {
-				numberOfUnsatified++;
+			if(r <= FAIL_PROCENT) {
+			numberOfUnsatified++;
 			c.changeSatisfaction();
 			//System.out.println(c.getId());
 			//System.out.println(endtime);
 			this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
 			}
-		}else if(c.getSatisfaction() == false) {
-			if((randomNum.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
+		}else {
+			if(r >= 100-FAIL_PROCENT) {
 				c.changeSatisfaction();
 			}else{
 				numberOfUnsatified++;
@@ -236,7 +243,6 @@ public class SaloonState extends State{
 	 */
 	public void createHairCutReady(Customer c, double time){
 		increaseIdleAndWait(time);
-		randomSatisfaction(c, time);
 		HaircutReady event = new HaircutReady(this, c, time);
 		//setChangedAndNotify();
 		q.add(event);
@@ -257,7 +263,7 @@ public class SaloonState extends State{
 	 */
 	public void createDissatisfiedReturn(Customer c, double time ){
 		increaseIdleAndWait(time);
-		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time, timeHairCut.next());
+		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time);
 		q.add(event);
 		//setChangedAndNotify();
 	}
@@ -407,6 +413,10 @@ public class SaloonState extends State{
 	
 	public double getNextHair(){
 		return timeHairCut.next();
+	}
+	
+	public double getNextUnsatisfied(){
+		return timeDissatisfiedReturn.next();
 	}
 	
 	public void setChangedAndNotify(){
