@@ -95,6 +95,7 @@ public class SaloonState extends State {
 			if (c.getSatisfaction())
 				customerCounter++;
 			return (true);
+		
 		} else if (!waitlineFull()) {
 			if (c.getSatisfaction()) {
 				waitLine.add(c);
@@ -107,8 +108,8 @@ public class SaloonState extends State {
 				}
 
 			}
+			
 		} else {
-
 			if (c.getSatisfaction()) {
 				numberOfLostCustomers++;
 			}else{
@@ -325,7 +326,6 @@ public class SaloonState extends State {
 	public void createDissatisfiedReturn(Customer c, double time){
 		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time);
 		q.add(event);
-		// setChangedAndNotify();
 	}
 
 	/**
@@ -334,14 +334,6 @@ public class SaloonState extends State {
 	public void changeOpenState() {
 		openState = !openState;
 	}
-
-	/**
-	 * Increases the amount of unsatisfied customers
-	 */
-	// public void addUnsatisfied(){
-	// System.out.println("nöjd");
-	// numberOfUnsatified++;
-	// }
 
 	/**
 	 * @return total amount of customers that have or will be cut.

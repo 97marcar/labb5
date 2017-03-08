@@ -55,7 +55,6 @@ public class DissatisfiedReturn implements Event {
 	 * @return name of the string
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Return";
 	}
 
@@ -63,7 +62,6 @@ public class DissatisfiedReturn implements Event {
 	 * @return customerID
 	 */
 	public int getCustomerID() {
-		// TODO Auto-generated method stub
 		return c.getId();
 	}
 }

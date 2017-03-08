@@ -82,16 +82,6 @@ public class SaloonView extends View{
 		}else{
 			System.out.printf("  "+q.getFirst().getTime()+"\t"+name);
 		}
-	//	Customer t;
-//	for(int i = 0; i < state.waitLine.size(); i++) {
-//		t = (Customer) state.waitLine.getIndex(i);
-//		System.out.print(" \t waitLine = " + t.getId());
-//		}
-//	Customer a;
-//	for(int j = 0; j < state.cutLine.size(); j++) {
-//		a = (Customer) state.cutLine.getIndex(j);
-//		System.out.print( "\t cutLine = " + a.getId());
-//	}
 		System.out.println();
 	}
 	

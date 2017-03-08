@@ -22,12 +22,9 @@ public class Customer_enter implements Event {
 	 * Constructor where the private variables(s,c,time) are set as well as the
 	 * time of when this event is supposed to end.
 	 * 
-	 * @param s
-	 *            SaloonState
-	 * @param c
-	 *            Customer
-	 * @param time
-	 *            the time of which this is supposed to happen
+	 * @param s SaloonState
+	 * @param c Customer
+	 * @param time the time of which this is supposed to happen
 	 */
 	public Customer_enter(SaloonState s, Customer c, double starttime) {
 		this.s = s;
