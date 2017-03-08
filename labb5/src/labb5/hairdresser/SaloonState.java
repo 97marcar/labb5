@@ -10,16 +10,16 @@ import labb5.simulator.EventQueue;
 import labb5.simulator.State;
 
 public class SaloonState extends State{
-	private final int DRESSERS = 2;
-	private final int WAITCHAIRS = 2;
+	private final int DRESSERS;//2
+	private final int WAITCHAIRS;//2
 	public FIFO waitLine = new FIFO();
 	public FIFO cutLine = new FIFO();
 	private int customerCounter = 0;
 	private int cID = 0;
-	private double hmin=1, hmax=2;
-	private double dmin=1, dmax=2;
-	private long seed=1116;
-	private double lambda=1.2;
+	private double hmin, hmax;//1 2
+	private double dmin, dmax;//1 2
+	private long seed;//1116
+	private double lambda;//1,2
 	private ExponentialRandomStream timeNewCustomer;
 	private UniformRandomStream timeHairCut;
 	private UniformRandomStream timeDissatisfiedReturn;
@@ -29,8 +29,8 @@ public class SaloonState extends State{
 	private boolean openState = true;
 	private double totalIdle = 0;
 	private double totalWait = 0;
-	private final double CLOSINGTIME = 7.00;
-	private int FAIL_PROCENT = 50;
+	private final double CLOSINGTIME;//7,00
+	private final int FAIL_PROCENT;//50
 	private Random randomNum = new Random(seed);
 	
 	/**
@@ -38,7 +38,21 @@ public class SaloonState extends State{
 	 * Also adds a Close event at CLOSINGTIME
 	 * @param q EventQueue
 	 */
-	public SaloonState(EventQueue q){
+	public SaloonState(EventQueue q, double CLOSINGTIME, int FAIL_PROCENT, int DRESSERS, int WAITCHAIRS, 
+			double hmin, double hmax, double dmin, double dmax, double lambda, long seed){
+		
+		this.CLOSINGTIME = CLOSINGTIME;
+		this.FAIL_PROCENT = FAIL_PROCENT;
+		this.DRESSERS = DRESSERS;
+		this.WAITCHAIRS = WAITCHAIRS;
+		this.hmin = hmin;
+		this.hmax = hmax;
+		this.dmin = dmin;
+		this.dmax = dmax;
+		this.lambda = lambda;
+		this.seed = seed;
+		
+		randomNum = new Random(seed);
 		timeNewCustomer = new ExponentialRandomStream (lambda, seed);
 		timeHairCut = new UniformRandomStream(hmin,hmax,seed);
 		timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
@@ -227,7 +241,7 @@ public class SaloonState extends State{
 			this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
 			}
 		}else {
-			if(r >= 100-FAIL_PROCENT) {
+			if(r >= FAIL_PROCENT) {
 				c.changeSatisfaction();
 			}else{
 				numberOfUnsatified++;
