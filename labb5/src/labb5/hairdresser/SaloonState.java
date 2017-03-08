@@ -56,7 +56,6 @@ public class SaloonState extends State{
 		timeNewCustomer = new ExponentialRandomStream (lambda, seed);
 		timeHairCut = new UniformRandomStream(hmin,hmax,seed);
 		timeDissatisfiedReturn = new UniformRandomStream(dmin,dmax,seed);
-		// Chansen att bli missnöjd hanteras just nu i HairCutReady, bör man flytta vissar delar därifrån?
 		this.q = q;
 		Event HairSaloonOpenOrClose = new HairSaloonOpenOrClose(this, CLOSINGTIME);
 		q.add(HairSaloonOpenOrClose);
@@ -71,7 +70,7 @@ public class SaloonState extends State{
 	 * @param time if the queue is full of unsatisfied customers this is the start time of the new DR object
 	 * @return true if it successfully added a customer to the line else false
 	 */
-	public boolean addLastLine(Customer c){
+	public boolean addLastLine(Customer c, double time){
 
 
 		if(!cutlineFull()){
@@ -96,7 +95,7 @@ public class SaloonState extends State{
 				numberOfLostCustomers++;
 			}else{
 				if(isLineFullOfUnSatisfied()){
-					addUnsatisfiedFirst(c);
+					createDissatisfiedReturn(c, time+getNextUnsatisfied());
 				}
 				
 			}
@@ -231,13 +230,10 @@ public class SaloonState extends State{
 	 */
 	public void randomSatisfaction(Customer c, double time) {
 		int r = (randomNum.nextInt(100) + 1);
-		System.out.println(r);
 		if(c.getSatisfaction() == true) {
 			if(r <= FAIL_PROCENT) {
 			numberOfUnsatified++;
 			c.changeSatisfaction();
-			//System.out.println(c.getId());
-			//System.out.println(endtime);
 			this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
 			}
 		}else {

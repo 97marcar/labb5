@@ -33,7 +33,7 @@ public class Customer_enter implements Event{
 		if(c.getSatisfaction()){
 			s.setChangedAndNotify();
 			s.createCustomer_enter(starttime);
-			if(s.addLastLine(c)){
+			if(s.addLastLine(c,  starttime)){
 				s.createHairCutReady(c, starttime+s.getNextHair());
 			}
 			 
