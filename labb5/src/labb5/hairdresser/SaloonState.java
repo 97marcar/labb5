@@ -42,7 +42,9 @@ public class SaloonState extends State {
 	private double totalWait = 0;
 	private final double CLOSINGTIME;// 7,00
 	private final double FAIL_PROCENT;// 50
-	private Random randomNum = new Random(seed);
+	private Random randomNum;
+	private double totalCuttingTime = 0;
+	
 
 	/**
 	 * Creates objects from the random package. These are used for time. Also
@@ -88,7 +90,6 @@ public class SaloonState extends State {
 	 * @return true if it successfully added a customer to the line else false
 	 */
 	public boolean addLastLine(Customer c, double time) {
-
 		if (!cutlineFull()) {
 			cutLine.add(c);
 			if (c.getSatisfaction())
@@ -113,7 +114,7 @@ public class SaloonState extends State {
 			}else{
 				if(isLineFullOfUnSatisfied()){
 					double next = getNextUnsatisfied();
-					createDissatisfiedReturn(c, time+next, next);
+					createDissatisfiedReturn(c, time+next);
 
 			}
 
@@ -246,7 +247,7 @@ public class SaloonState extends State {
 	public void createCustomer_enter(double time) {
 		double next = timeNewCustomer.next();
 		if(time+next < CLOSINGTIME){
-			Customer_enter event = new Customer_enter(this, createCustomer(), time+next, next);
+			Customer_enter event = new Customer_enter(this, createCustomer(), time+next);
 			q.add(event);
 
 		}
@@ -267,14 +268,14 @@ public class SaloonState extends State {
 			numberOfUnsatified++;
 			c.changeSatisfaction();
 			double nexttime = timeDissatisfiedReturn.next();
-			this.createDissatisfiedReturn(c, time+nexttime, nexttime);
+			this.createDissatisfiedReturn(c, time+nexttime);
 			}
 		} else {
 			if (r >= FAIL_PROCENT) {
 				c.changeSatisfaction();
 			} else {
 				double nexttime = timeDissatisfiedReturn.next();
-				this.createDissatisfiedReturn(c, time+nexttime, nexttime);
+				this.createDissatisfiedReturn(c, time+nexttime);
 
 			}
 		}
@@ -321,8 +322,8 @@ public class SaloonState extends State {
 	 *            start time of the event
 	 */
 
-	public void createDissatisfiedReturn(Customer c, double time, double diff){
-		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time, diff);
+	public void createDissatisfiedReturn(Customer c, double time){
+		DissatisfiedReturn event = new DissatisfiedReturn(this, c, time);
 		q.add(event);
 		// setChangedAndNotify();
 	}
@@ -488,8 +489,20 @@ public class SaloonState extends State {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void increaseCuttingTime(double time){
+		totalCuttingTime += time;
+	}
+	
+	public double averageCuttingTime(){
+		return totalCuttingTime/getTotalCustomer();
+	}
 
 	public double getCurrentTime(){
 		return q.currentTime();
+	}
+	
+	public double getDiff(){
+		return q.getDiff();
 	}
 }

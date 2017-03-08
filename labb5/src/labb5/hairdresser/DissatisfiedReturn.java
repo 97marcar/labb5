@@ -17,19 +17,16 @@ public class DissatisfiedReturn implements Event {
 	private SaloonState s;
 	private Customer c;
 	private double starttime;
-	private double diff;
-	
 	/**
 	 * 
 	 * @param c customer
 	 * @param starttime start time
 	 * @param endtime end to,e
 	 */
-	public DissatisfiedReturn(SaloonState s, Customer c, double starttime, double diff){
+	public DissatisfiedReturn(SaloonState s, Customer c, double starttime){
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
-		this.diff = diff;
 	}
 	
 	/**
@@ -40,11 +37,7 @@ public class DissatisfiedReturn implements Event {
 	public void triggerEvent() {
 		s.increaseIdleAndWait(starttime-s.getCurrentTime());
 		s.setChangedAndNotify();
-		//System.out.println(s.getCurrentTime());
-		//System.out.println(starttime-s.getCurrentTime());
-		
-		
-		
+	
 		if(s.addLastLine(c, starttime)){
 			double nexttime = s.getNextHair();
 			s.createHairCutReady(c, starttime+nexttime, nexttime);
