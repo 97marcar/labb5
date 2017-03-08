@@ -41,7 +41,7 @@ public class SaloonState extends State {
 	private double totalIdle = 0;
 	private double totalWait = 0;
 	private final double CLOSINGTIME;// 7,00
-	private final int FAIL_PROCENT;// 50
+	private final double FAIL_PROCENT;// 50
 	private Random randomNum = new Random(seed);
 
 	/**
@@ -51,11 +51,11 @@ public class SaloonState extends State {
 	 * @param q
 	 *            EventQueue
 	 */
-	public SaloonState(EventQueue q, double CLOSINGTIME, int FAIL_PROCENT, int DRESSERS, int WAITCHAIRS, double hmin,
+	public SaloonState(EventQueue q, double CLOSINGTIME, double fail_procent, int DRESSERS, int WAITCHAIRS, double hmin,
 			double hmax, double dmin, double dmax, double lambda, long seed) {
 
 		this.CLOSINGTIME = CLOSINGTIME;
-		this.FAIL_PROCENT = FAIL_PROCENT;
+		this.FAIL_PROCENT = fail_procent;
 		this.DRESSERS = DRESSERS;
 		this.WAITCHAIRS = WAITCHAIRS;
 		this.hmin = hmin;
@@ -261,7 +261,7 @@ public class SaloonState extends State {
 	 *            previously dissatisfied.
 	 */
 	public void randomSatisfaction(Customer c, double time) {
-		int r = (randomNum.nextInt(100) + 1);
+		double r = randomNum.nextDouble();
 		if(c.getSatisfaction() == true) {
 			if(r <= FAIL_PROCENT) {
 			numberOfUnsatified++;
@@ -300,7 +300,7 @@ public class SaloonState extends State {
 	 * 
 	 * @return the chance of the customer getting dissatisfied.
 	 */
-	public int getFails() {
+	public double getFails() {
 		return FAIL_PROCENT;
 	}
 	/**
