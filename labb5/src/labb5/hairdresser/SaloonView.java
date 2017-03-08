@@ -62,31 +62,26 @@ public class SaloonView extends View{
 	public void saloonEndLayout() {
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("Number of customers cut .......: " + state.getTotalCustomer());
-//		System.out.printf("Average cutting time ..........: %.2f", state.cutTime / state.getTotalCustomer());
-//		System.out.println();
+		System.out.printf("Average cutting time ..........: %.2f", state.averageCuttingTime());
+		System.out.println();
 		System.out.printf("Average queuing time ..........: %.2f" , state.getTotalWait() / state.getTotalCustomer());
 		System.out.println();
 		System.out.println("Largest queue (max NumWaiting) : " + state.getMaxSize());
 		System.out.println("Customers not cut(NumLost) ....: " + state.getLostCustomer());
 		System.out.println("Dissatisfied customers ........: " + state.getUnsatisfied());
-		System.out.printf("Time chairs were idle .........: %.2f " , state.getTotalIdle() /state.getTotalWait());
+		System.out.printf("Time chairs were idle .........: %.2f " , state.getTotalIdle());
 		System.out.println();
 		
 		
 	}
 	public void update(Observable o, Object arg) {
-	System.out.printf("  %.2f  %s\t %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), q.getFirst().getName(), q.getFirst().getCustomerID(),
-				state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
-//	Customer t;
-//	for(int i = 0; i < state.waitLine.size(); i++) {
-//		t = (Customer) state.waitLine.getIndex(i);
-//		System.out.print(" \t waitLine = " + t.getId());
-//		}
-//	Customer a;
-//	for(int j = 0; j < state.cutLine.size(); j++) {
-//		a = (Customer) state.cutLine.getIndex(j);
-//		System.out.print( "\t cutLine = " + a.getId());
-//	}
+		String name = q.getFirst().getName();
+		if(!(name.equals("Opening") || name.equals("Closing"))){
+			System.out.printf("  %.2f  %s\t %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), name, q.getFirst().getCustomerID(),
+					state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
+		}else{
+			System.out.printf("  "+q.getFirst().getTime()+"\t"+name);
+		}
 		System.out.println();
 	}
 	

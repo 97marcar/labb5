@@ -49,9 +49,9 @@ public class HairSaloonOpenOrClose implements Event{
 	 */
 	public String getName() {
 		if(s.getOpenState()){
-			return "(Opening)";
+			return "Opening";
 		}else{
-			return "(Closing)";
+			return "Closing";
 		}
 	}
 

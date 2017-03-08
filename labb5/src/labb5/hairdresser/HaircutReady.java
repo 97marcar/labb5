@@ -40,13 +40,18 @@ public class HaircutReady implements Event {
 	 * Which events that are used.
 	 */
 	public void triggerEvent() {
+<<<<<<< HEAD
 		
 		s.increaseTIdle(time-s.getCurrentTime());
+=======
+		s.increaseIdleAndWait(time-s.getCurrentTime());
+>>>>>>> origin/master
 		s.setChangedAndNotify();
 		
 		
 		s.removeFromQueue(c);
 		s.randomSatisfaction(c, time);
+		s.increaseCuttingTime(diff);
 		s.continueQueue(time);
 	}
 
