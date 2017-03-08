@@ -38,9 +38,9 @@ public class DissatisfiedReturn implements Event {
 	public void triggerEvent() {
 		s.setChangedAndNotify();
 		
-		if(s.addLastLine(c)){
+		if(s.addLastLine(c, starttime)){
 			s.createHairCutReady(c, starttime+s.getNextHair());
-		}	
+		}
 	}
 	
 	/**
