@@ -1,12 +1,11 @@
 package labb5.hairdresser;
 
-import java.util.Random;
-
 
 import labb5.simulator.Event;
 
 /**
- * 
+ * Eventclass that removes customers from the queue if the customer was
+ * satisfied and prints out the status.
  * 
  * 
  * @author Marcus Carlsson
@@ -20,25 +19,28 @@ public class HaircutReady implements Event {
 	private Customer c;
 	private SaloonState s;
 	private double time;
-	
+
 	/**
 	 * 
-	 * @param s SaloonState
-	 * @param c Customer
-	 * @param starttime start time
+	 * @param s
+	 *            SaloonState
+	 * @param c
+	 *            Customer
+	 * @param starttime
+	 *            start time
 	 */
-	public HaircutReady(SaloonState s, Customer c,double time){
+	public HaircutReady(SaloonState s, Customer c, double time) {
 		this.c = c;
 		this.s = s;
 		this.time = time;
-		
+
 	}
 
 	public void triggerEvent() {
 		s.setChangedAndNotify();
 		s.removeFromQueue(c);
 		s.randomSatisfaction(c, time);
-		s.continueQueue(time);		
+		s.continueQueue(time);
 	}
 
 	/**
@@ -49,8 +51,8 @@ public class HaircutReady implements Event {
 	}
 
 	/**
-	 * @return name of this event	
-	 *  */
+	 * @return name of this event
+	 */
 	public String getName() {
 		return "Done";
 	}

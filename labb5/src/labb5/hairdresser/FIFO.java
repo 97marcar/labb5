@@ -2,8 +2,13 @@ package labb5.hairdresser;
 import java.util.*;
 
 /**
+ * FIFO class that controls all queues.
+ * The FIFO has been modified to suit the simulation.
  * 
- * @author Marcus, Oscar, Henrik. hej
+ * @author Marcus Carlsson
+ * @author Henrik Möller
+ * @author Oscar Ferm
+ * @since 2017-03-08
  *
  */
 public class FIFO{

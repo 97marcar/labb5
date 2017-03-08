@@ -3,10 +3,20 @@ package labb5.hairdresser;
 import labb5.simulator.Event;
 
 public class DissatisfiedReturn implements Event {
+	
+	/**
+	 * Eventclass that places dissatisfied customers back in FIFO.
+	 * Keeps track and adds the time of this event when triggered.
+	 * 
+	 * @author Marcus Carlsson
+	 * @author Henrik Möller
+	 * @author Oscar Ferm
+	 * @since 2017-03-08
+	 *
+	 */
 	private SaloonState s;
 	private Customer c;
 	private double starttime;
-	private double endtime;
 	
 	/**
 	 * 
@@ -30,10 +40,7 @@ public class DissatisfiedReturn implements Event {
 		
 		if(s.addLastLine(c)){
 			s.createHairCutReady(c, starttime+s.getNextHair());
-		}
-		
-//			s.createDissatisfiedReturn(c, starttime+s.getNextUnsatisfied());
-		
+		}	
 	}
 	
 	/**
