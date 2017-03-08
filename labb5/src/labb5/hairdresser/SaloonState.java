@@ -71,6 +71,7 @@ public class SaloonState extends State{
 			}
 			return(true);
 		}else{
+			
 			if(c.getSatisfaction()){
 				numberOfLostCustomers++;
 			}else{
@@ -202,9 +203,17 @@ public class SaloonState extends State{
 		}
 		
 	}
+	/**
+	 * 
+	 * @param c
+	 * @param time
+	 * counter++ every time a customers get dissatisfied,
+	 * works if previously dissatisfied.
+	 */
 	private void randomSatisfaction(Customer c, double time) {
 		if(c.getSatisfaction() == true) {
 			if((randomNum.nextInt(100) + 1) <= FAIL_PROCENT) {
+				numberOfUnsatified++;
 			c.changeSatisfaction();
 			//System.out.println(c.getId());
 			//System.out.println(endtime);
@@ -214,6 +223,7 @@ public class SaloonState extends State{
 			if((randomNum.nextInt(100) + 1) <= 100-FAIL_PROCENT) {
 				c.changeSatisfaction();
 			}else{
+				numberOfUnsatified++;
 				this.createDissatisfiedReturn(c, time+timeDissatisfiedReturn.next());
 			}
 		}
@@ -262,9 +272,10 @@ public class SaloonState extends State{
 	/**
 	 * Increases the amount of unsatisfied customers 
 	 */
-	public void addUnsatisfied(){
-		numberOfUnsatified++;
-	}
+//	public void addUnsatisfied(){
+//		System.out.println("nöjd");
+//		numberOfUnsatified++;
+//	}
 	
 	
 	/**
