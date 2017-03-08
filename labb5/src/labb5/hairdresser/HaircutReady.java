@@ -41,7 +41,7 @@ public class HaircutReady implements Event {
 	 */
 	public void triggerEvent() {
 		
-		s.increaseIdleAndWait(time-s.getCurrentTime());
+		s.increaseTIdle(time-s.getCurrentTime());
 		s.setChangedAndNotify();
 		
 		
