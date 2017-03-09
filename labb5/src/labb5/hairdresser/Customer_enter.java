@@ -18,24 +18,18 @@ public class Customer_enter implements Event {
 	private SaloonState s;
 	private Customer c;
 	private double starttime;
-	private double diff;
 	/**
 	 * Constructor where the private variables(s,c,time) are set as well as the
 	 * time of when this event is supposed to end.
 	 * 
-	 * @param s
-	 *            SaloonState
-	 * @param c
-	 *            Customer
-	 * @param time
-	 *            the time of which this is supposed to happen
+	 * @param s SaloonState
+	 * @param c Customer
+	 * @param time the time of which this is supposed to happen
 	 */
-	public Customer_enter(SaloonState s, Customer c, double starttime, double diff) {
+	public Customer_enter(SaloonState s, Customer c, double starttime) {
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
-		this.diff=diff;
-		// kvar att skapa endtime
 	}
 
 	/**
@@ -43,7 +37,10 @@ public class Customer_enter implements Event {
 	 * customers this method throws an exception otherwise.
 	 */
 	public void triggerEvent() {
-		s.increaseIdleAndWait(starttime-s.getCurrentTime());
+		c.setStartTime(starttime);
+		s.increaseTIdle(starttime-s.getCurrentTime());
+		s.increaseTWait(starttime);
+	
 		if (c.getSatisfaction()) {
 			s.setChangedAndNotify();
 			s.createCustomer_enter(starttime);

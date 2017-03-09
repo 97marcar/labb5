@@ -17,19 +17,16 @@ public class DissatisfiedReturn implements Event {
 	private SaloonState s;
 	private Customer c;
 	private double starttime;
-	private double diff;
-	
 	/**
 	 * 
 	 * @param c customer
 	 * @param starttime start time
 	 * @param endtime end to,e
 	 */
-	public DissatisfiedReturn(SaloonState s, Customer c, double starttime, double diff){
+	public DissatisfiedReturn(SaloonState s, Customer c, double starttime){
 		this.s = s;
 		this.c = c;
 		this.starttime = starttime;
-		this.diff = diff;
 	}
 	
 	/**
@@ -38,13 +35,9 @@ public class DissatisfiedReturn implements Event {
 	 * a new event of the same kind but with a new start time.
 	 */
 	public void triggerEvent() {
-		s.increaseIdleAndWait(starttime-s.getCurrentTime());
+		s.increaseTIdle(starttime-s.getCurrentTime());
 		s.setChangedAndNotify();
-		//System.out.println(s.getCurrentTime());
-		//System.out.println(starttime-s.getCurrentTime());
-		
-		
-		
+	
 		if(s.addLastLine(c, starttime)){
 			double nexttime = s.getNextHair();
 			s.createHairCutReady(c, starttime+nexttime, nexttime);
@@ -62,7 +55,6 @@ public class DissatisfiedReturn implements Event {
 	 * @return name of the string
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Return";
 	}
 
@@ -70,7 +62,6 @@ public class DissatisfiedReturn implements Event {
 	 * @return customerID
 	 */
 	public int getCustomerID() {
-		// TODO Auto-generated method stub
 		return c.getId();
 	}
 }

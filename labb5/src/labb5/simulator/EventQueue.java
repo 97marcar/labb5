@@ -90,19 +90,19 @@ public class EventQueue {
 	}
 	
 	public void updateCurrentTime(){
+		
 		double t = currentTime;
-		currentTime = getFirst().getTime();
-		diff = currentTime-t;
+		Event e = getFirst();
+		if(!(e.getName().equals("Opening") || e.getName().equals("Closing"))){
+			currentTime = e.getTime();
+			diff=currentTime-t;
+		}
 		
 	}
 	
 	public double getDiff(){
 		return diff;
 	}
-	
-	
-	
-	
 	
 	public double currentTime(){
 		return currentTime;
