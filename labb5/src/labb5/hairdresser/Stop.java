@@ -28,11 +28,12 @@ public class Stop implements Event{
 
 	
 	public void triggerEvent() {
-		//state.setCurrentEvent(this);
+		state.activateBreak();
+		state.setChangedAndNotify();
 		
 	}
 	public String getName() {
-		return "StopHSS";
+		return "Stop";
 	}
 
 	@Override

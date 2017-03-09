@@ -33,6 +33,7 @@ public class Start implements Event{
 	 */
 	public void triggerEvent() {
 		state.createCustomer_enter(0);
+		state.setChangedAndNotify();
 		
 	}
 	

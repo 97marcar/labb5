@@ -39,7 +39,7 @@ public class Customer_enter implements Event {
 	public void triggerEvent() {
 		
 		s.increaseIdleAndWait(starttime-s.getCurrentTime());
-		
+		c.setCurrentTimeCustomer(starttime);
 		
 		if (c.getSatisfaction()) {
 			s.setChangedAndNotify();

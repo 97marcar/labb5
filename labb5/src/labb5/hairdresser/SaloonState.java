@@ -44,6 +44,7 @@ public class SaloonState extends State {
 	private final double FAIL_PROCENT;// 50
 	private Random randomNum;
 	private double totalCuttingTime = 0;
+	private boolean emergencyBreak = true;
 	
 
 	/**
@@ -112,13 +113,16 @@ public class SaloonState extends State {
 		} else {
 			if (c.getSatisfaction()) {
 				numberOfLostCustomers++;
-			}else{
-				if(isLineFullOfUnSatisfied()){
+			}else if(isLineFullOfUnSatisfied()){
 					double next = getNextUnsatisfied();
 					createDissatisfiedReturn(c, time+next);
-
-			}
-
+			}else{
+				addUnsatisfiedFirst(c);
+				numberOfLostCustomers++;
+				customerCounter--;
+				Customer ctemp = (Customer)waitLine.getIndex(waitLine.size()-1);
+				totalWait= totalWait - (time-ctemp.getCustomerEnterTime());
+				waitLine.removeBack();
 			}
 		}
 		return (false);
@@ -138,6 +142,7 @@ public class SaloonState extends State {
 		}
 		if (waitLine.size() > WAITCHAIRS) {
 			if (!isLineFullOfUnSatisfied()) {
+				
 				waitLine.removeBack();
 				numberOfLostCustomers++;
 				customerCounter--;
@@ -496,5 +501,11 @@ public class SaloonState extends State {
 	
 	public double getDiff(){
 		return q.getDiff();
+	}
+	public void activateBreak(){
+		 emergencyBreak=false;
+    }
+	public boolean getBreak(){
+		return emergencyBreak;
 	}
 }

@@ -16,13 +16,26 @@ public class Customer {
 
 	private boolean isSatisfied = true;
 	private int id;
-
+	private double enterTime;
+	private double time;
 	/**
 	 * @param id
 	 *            unique customer id
 	 */
 	public Customer(int id) {
 		this.id = id;
+		this.enterTime=0;
+	}
+	
+	
+
+	
+	public void setCurrentTimeCustomer(double time){
+		this.enterTime=time;
+	}
+	
+	public double getCustomerEnterTime(){
+		return enterTime;
 	}
 
 	/**

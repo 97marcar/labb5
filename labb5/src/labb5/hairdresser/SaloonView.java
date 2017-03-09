@@ -78,7 +78,7 @@ public class SaloonView extends View{
 		String name = q.getFirst().getName();
 		if(!(name.equals("Opening") || name.equals("Closing"))){
 			System.out.printf("  %.2f  %s\t %d\t %d\t %.2f\t %.2f\t %d\t %d\t %d\t %d\t", q.getFirst().getTime(), name, q.getFirst().getCustomerID(),
-					state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getCutLine(), state.getLostCustomer(), state.getUnsatisfied());
+					state.getIdle(), state.getTotalIdle(), state.getTotalWait(), state.getWaitLine(), state.getTotalCustomer(), state.getLostCustomer(), state.getUnsatisfied());
 		}else{
 			System.out.printf("  "+q.getFirst().getTime()+"\t"+name);
 		}
