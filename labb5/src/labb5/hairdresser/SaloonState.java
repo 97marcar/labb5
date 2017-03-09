@@ -41,15 +41,10 @@ public class SaloonState extends State {
 	private double totalIdle = 0;
 	private double totalWait = 0;
 	private final double CLOSINGTIME;// 7,00
-<<<<<<< HEAD
-	private final int FAIL_PROCENT;// 50
-	private Random randomNum;
-=======
 	private final double FAIL_PROCENT;// 50
 	private Random randomNum;
 	private double totalCuttingTime = 0;
-	
->>>>>>> origin/master
+
 
 	/**
 	 * Creates objects from the random package. These are used for time. Also

@@ -37,16 +37,10 @@ public class Customer_enter implements Event {
 	 * customers this method throws an exception otherwise.
 	 */
 	public void triggerEvent() {
-<<<<<<< HEAD
 		c.setStartTime(starttime);
 		s.increaseTIdle(starttime-s.getCurrentTime());
 		s.increaseTWait(starttime);
-=======
-		
-		s.increaseIdleAndWait(starttime-s.getCurrentTime());
-		
-		
->>>>>>> origin/master
+	
 		if (c.getSatisfaction()) {
 			s.setChangedAndNotify();
 			s.createCustomer_enter(starttime);
