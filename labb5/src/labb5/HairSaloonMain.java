@@ -19,14 +19,14 @@ public class HairSaloonMain {
 
 	public static void main(String[] args) {
 
-		double hmin = 0.8, hmax = 1.2;
-		double dmin = 2.0, dmax = 3.0;
-		long seed = 1116;
-		double lambda = 3;
-		int dressers = 3;
-		int waitchairs = 4;
-		double closingtime = 8.00;
-		double fail_procent = 0.25;
+//		double hmin = 0.8, hmax = 1.2;
+//		double dmin = 2.0, dmax = 3.0;
+//		long seed = 1116;
+//		double lambda = 3;
+//		int dressers = 3;
+//		int waitchairs = 4;
+//		double closingtime = 8.00;
+//		double fail_procent = 0.25;
 		
 //		double hmin = 0.8, hmax = 1.2;
 //		double dmin = 1.0, dmax = 2.0;
@@ -38,15 +38,15 @@ public class HairSaloonMain {
 //		double fail_procent = 0.0;
 
 		
-//		double hmin = 1, hmax = 2;
-//		double dmin = 1.0, dmax = 2.0;
-//		long seed = 1116;
-//		double lambda = 1.2;
-//		int dressers = 2;
-//		int waitchairs = 2;
-//		double closingtime = 7.00;
-//		double fail_procent = 0.5;
-//		
+		double hmin = 1, hmax = 2;
+		double dmin = 1.0, dmax = 2.0;
+		long seed = 1116;
+		double lambda = 1.2;
+		int dressers = 2;
+		int waitchairs = 2;
+		double closingtime = 7.00;
+		double fail_procent = 0.5;
+		
 		 
 
 		EventQueue queue = new EventQueue();
