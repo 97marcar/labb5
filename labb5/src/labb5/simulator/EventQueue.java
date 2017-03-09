@@ -105,6 +105,7 @@ public class EventQueue {
 	}
 	
 	public double currentTime(){
+		
 		return currentTime;
 	}
 

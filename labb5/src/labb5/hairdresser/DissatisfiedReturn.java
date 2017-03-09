@@ -35,7 +35,7 @@ public class DissatisfiedReturn implements Event {
 	 * a new event of the same kind but with a new start time.
 	 */
 	public void triggerEvent() {
-		s.increaseTIdle(starttime-s.getCurrentTime());
+		s.increaseIdleAndWait(starttime-s.getCurrentTime());
 		s.setChangedAndNotify();
 	
 		if(s.addLastLine(c, starttime)){

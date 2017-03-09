@@ -16,7 +16,6 @@ public class Customer {
 
 	private boolean isSatisfied = true;
 	private int id;
-	private double startTime; 
 
 	/**
 	 * @param id
@@ -26,14 +25,6 @@ public class Customer {
 		this.id = id;
 	}
 
-	
-	public void setStartTime(double time){
-		startTime=time;
-	}
-	
-	public double getStartTime(){
-		return startTime;
-	}
 	/**
 	 * Change state of customers satisfaction
 	 */
@@ -54,5 +45,4 @@ public class Customer {
 	public int getId() {
 		return id;
 	}
-	
 }

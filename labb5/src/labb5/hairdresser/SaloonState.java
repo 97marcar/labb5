@@ -44,7 +44,7 @@ public class SaloonState extends State {
 	private final double FAIL_PROCENT;// 50
 	private Random randomNum;
 	private double totalCuttingTime = 0;
-
+	
 
 	/**
 	 * Creates objects from the random package. These are used for time. Also
@@ -235,11 +235,9 @@ public class SaloonState extends State {
 		return c;
 	}
 
-	public void increaseTIdle(double time) {
+	public void increaseIdleAndWait(double time) {
 		totalIdle += time * getIdle();
-	}
-	public void increaseTWait(double time) {
-		totalWait += time*waitLine.size();
+		totalWait += time * waitLine.size();
 	}
 
 	/**
